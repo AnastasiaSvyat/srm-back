@@ -4,6 +4,10 @@ let express = require('express'),
   cors = require('cors'),
   bodyParser = require('body-parser'),
   mongoDb = require('./database/db');
+  
+const fileUpload = require('express-fileupload');
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 
 mongoose.Promise = global.Promise;
 mongoose.connect(mongoDb.db, {
@@ -18,12 +22,19 @@ mongoose.connect(mongoDb.db, {
   }
 )
 const staffRoute = require('./route/staff.routes')
+const eventRoute = require('./route/events.routes')
+const authRoute = require('./route/auth.routes')
+
+
+
 
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cors());
+app.use(fileUpload());
+
 
 // Static directory path
 app.use(express.static(path.join(__dirname, 'dist/srm-master')));
@@ -31,6 +42,10 @@ app.use(express.static(path.join(__dirname, 'dist/srm-master')));
 
 // API root
 app.use('/api', staffRoute)
+app.use('/api', eventRoute)
+app.use('/api', authRoute)
+
+
 
 // PORT
 const port = process.env.PORT || 8000;
