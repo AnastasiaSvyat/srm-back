@@ -14,6 +14,20 @@ const getPagination = (page, size) => {
   return { limit, offset };
 };
 
+
+
+// Get all Staff
+staffRoute.route('/').get((req, res) => {
+  Employee.find((error, data) => {
+  if (error) {
+    return next(error)
+  } else {
+    res.json(data)
+  }
+})
+})
+
+
 // Add employee
 staffRoute.post('/add-employee',async(req,res) => {
   const candidate = await Employee.findOne({email: req.body.email})
@@ -43,10 +57,20 @@ staffRoute.post('/add-employee',async(req,res) => {
   }
 }
 })
+staffRoute.route('/birthday-employee').get((req, res) => {
+  Employee.find((error, data) => {
+  if (error) {
+    return next(error)
+  } else {
+    res.json({
+      birthday:data.birthday
+    })
+  }
+})
+})
 
-
-// Get all Staff
-staffRoute.route('/').get((req, res) => {
+// Get all Staff Pagination 
+staffRoute.route('/stafflist').get((req, res) => {
   const { page, size, name } = req.query;
   var condition = name?{ name: { $regex: new RegExp(name), $options: "i" } }
 : {};
@@ -57,9 +81,10 @@ staffRoute.route('/').get((req, res) => {
     .then((data) => {
       res.json({
         totalItems: data.totalDocs,
-        tutorials: data.docs,
+        staffList: data.docs,
         totalPages: data.totalPages,
         currentPage: data.page - 1,
+        data:data
       });
     })
     .catch((err) => {
@@ -95,6 +120,7 @@ staffRoute.route('/update-employee/:id').put((req, res, next) => {
     }
   })
 })
+
 
 // Delete employee
 staffRoute.route('/delete-employee/:id').delete((req, res, next) => {
