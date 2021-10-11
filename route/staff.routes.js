@@ -46,6 +46,11 @@ staffRoute.post('/add-employee',async(req,res) => {
     salary: req.body.salary,
     phone: req.body.phone,
     role:req.body.role,
+    salary: req.body.salary,
+    info: req.body.info,
+    file:req.body.file,
+    toDoList:req.body.toDoList,
+    id: req.body._id,
     password: bcrypt.hashSync(password,salt)
   })
   try{
