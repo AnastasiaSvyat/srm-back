@@ -1,16 +1,16 @@
 const express = require('express');
 const app = express();
-const eventRoute = express.Router();
+const requestRoute = express.Router();
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const keys = require("../database/db")
 const errorHandler = require("../utills/errorHandler")
 
-let Events = require('../model/Events');
+let Request = require('../model/Request');
  
-// Add Event
-eventRoute.route('/add-event').post((req, res, next) => {
-  Events.create(req.body, (error, data) => {
+// Add Request
+requestRoute.route('/add-request').post((req, res, next) => {
+    Request.create(req.body, (error, data) => {
   if (error) {
     return next(error)
   } else {
@@ -21,9 +21,9 @@ eventRoute.route('/add-event').post((req, res, next) => {
 });
 
 
-// Get all Events
-eventRoute.route('/get-event').get((req, res) => {
-    Events.find((error, data) => {
+// Get all Request
+requestRoute.route('/get-request').get((req, res) => {
+    Request.find((error, data) => {
     if (error) {
       return next(error)
     } else {
@@ -32,9 +32,9 @@ eventRoute.route('/get-event').get((req, res) => {
   })
 })
 
-// Get Event 
-eventRoute.route('/read-event/:id').get((req, res) => {
-  Events.findById(req.params.id, (error, data) => {
+// Get Request 
+requestRoute.route('/read-request/:id').get((req, res) => {
+    Request.findById(req.params.id, (error, data) => {
     if (error) {
       return next(error)
     } else {
@@ -44,9 +44,9 @@ eventRoute.route('/read-event/:id').get((req, res) => {
 })
 
 
-// Update Event
-eventRoute.route('/update-event/:id').put((req, res, next) => {
-    EveEventsnt.findByIdAndUpdate(req.params.id, {
+// Update Request
+requestRoute.route('/update-request/:id').put((req, res, next) => {
+    Request.findByIdAndUpdate(req.params.id, {
     $set: req.body
   }, (error, data) => {
     if (error) {
@@ -58,10 +58,9 @@ eventRoute.route('/update-event/:id').put((req, res, next) => {
   })
 })
 
-// Delete Event
-eventRoute.route('/delete-event/:id').delete((req, res, next) => {
-  
-  Events.findByIdAndRemove(req.params.id, (error, data) => {
+// Delete Request
+requestRoute.route('/delete-request/:id').delete((req, res, next) => {
+    Request.findByIdAndRemove(req.params.id, (error, data) => {
     if (error) {
       return next(error);
     } else {
@@ -72,4 +71,4 @@ eventRoute.route('/delete-event/:id').delete((req, res, next) => {
   })
 })
 
-module.exports = eventRoute;
+module.exports = requestRoute;
