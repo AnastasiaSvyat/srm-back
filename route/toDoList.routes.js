@@ -23,13 +23,19 @@ toDoListRoute.route('/add-task').post((req, res, next) => {
 
 // Get all Events
 toDoListRoute.route('/get-task').get((req, res) => {
-    ToDoList.find((error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      res.json(data)
-    }
-  })
+  const email = req.query.email
+  var condition = email ? { email:  email} : {};
+  console.log(email);
+  console.log(condition);
+
+  ToDoList.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
 })
 
 // Get Event 

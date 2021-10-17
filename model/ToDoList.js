@@ -8,6 +8,9 @@ let ToDoList = new Schema({
   date:{
     type: String
   },
+  email:{
+    type: String
+  }
  
 }, {
   collection: 'toDoList'
