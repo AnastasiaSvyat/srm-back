@@ -18,7 +18,10 @@ let Request = new Schema({
     type: String
   },
   confirm:{
-      type:String
+      type:Boolean
+  },
+  decline:{
+    type:Boolean
   },
   name:{
     type:String

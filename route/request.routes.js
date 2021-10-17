@@ -23,13 +23,21 @@ requestRoute.route('/add-request').post((req, res, next) => {
 
 // Get all Request
 requestRoute.route('/get-request').get((req, res) => {
-    Request.find((error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      res.json(data)
-    }
-  })
+  const dd = {
+    confirm: req.query.confirm,
+    decline : req.query.decline
+  }
+  console.log(dd);
+  var condition = dd ? { decline:  dd.decline, confirm : dd.confirm} : {};
+  
+  Request.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
 })
 
 // Get Request 
@@ -42,6 +50,49 @@ requestRoute.route('/read-request/:id').get((req, res) => {
     }
   })
 })
+
+
+
+requestRoute.route('/true-request').get((req, res) => {
+ 
+  const confirm = req.query.confirm
+  var condition = confirm ? { confirm:  confirm} : {};
+  
+  Request.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
+});
+
+requestRoute.route('/false-request').get((req, res) => {
+ 
+  const decline = req.query.decline
+  var condition = decline ? { decline:  decline} : {};
+  
+  Request.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
+});
+
+requestRoute.route('/trure-request/:confirm').get((req, res) => {
+  Request.findById(req.params.id, (error, data) => {
+  if (error) {
+    return next(error)
+  } else {
+    res.json(data)
+  }
+})
+})
+
 
 
 // Update Request
