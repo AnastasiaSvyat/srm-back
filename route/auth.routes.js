@@ -1,10 +1,8 @@
 const express = require('express');
-const app = express();
 const loginRoute = express.Router();
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const keys = require("../database/db")
-const errorHandler = require("../utills/errorHandler")
 
 let Employee = require('../model/Employee');
  

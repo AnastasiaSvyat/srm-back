@@ -1,10 +1,5 @@
 const express = require('express');
-const app = express();
 const eventRoute = express.Router();
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const keys = require("../database/db")
-const errorHandler = require("../utills/errorHandler")
 
 let Events = require('../model/Events');
  

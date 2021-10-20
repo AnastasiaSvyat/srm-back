@@ -1,11 +1,8 @@
 const express = require('express');
-const app = express();
 const staffRoute = express.Router();
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const keys = require("../database/db")
-
 const errorHandler = require("../utills/errorHandler")
+
 let Employee = require('../model/Employee');
  
 const getPagination = (page, size) => {
@@ -13,8 +10,6 @@ const getPagination = (page, size) => {
   const offset = page ? page * limit : 0;
   return { limit, offset };
 };
-
-
 
 // Get all Staff
 staffRoute.route('/').get((req, res) => {
