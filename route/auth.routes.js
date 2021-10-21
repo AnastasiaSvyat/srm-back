@@ -16,12 +16,12 @@ loginRoute.post('/login',async(req,res) => {
     if(passwordResult){
       const token = jwt.sign({
           email: user.email,
-          userId: user._id,
+          id: user._id,
           role: user.role,
       },keys.jwt,{expiresIn: 60 * 60})
         res.status(200).json({
           email: user.email,
-          userId: user._id,
+          id: user._id,
           role: user.role,
           name:user.name,
           phone: user.phone,
