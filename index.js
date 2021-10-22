@@ -24,6 +24,9 @@ mongoose.connect(mongoDb.db, {
 const staffRoute = require('./route/staff.routes')
 const eventRoute = require('./route/events.routes')
 const authRoute = require('./route/auth.routes')
+const uploadFile = require('./route/uploadFile.routes')
+const requestRoute = require('./route/request.routes')
+const toDoListRoute = require('./route/toDoList.routes')
 
 
 
@@ -44,6 +47,13 @@ app.use(express.static(path.join(__dirname, 'dist/srm-master')));
 app.use('/api', staffRoute)
 app.use('/api', eventRoute)
 app.use('/api', authRoute)
+app.use('/api', uploadFile)
+
+app.use('/api', requestRoute)
+
+app.use('/api', toDoListRoute)
+
+
 
 
 

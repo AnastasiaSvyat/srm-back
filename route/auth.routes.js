@@ -1,14 +1,13 @@
 const express = require('express');
-const app = express();
 const loginRoute = express.Router();
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const keys = require("../database/db")
-const errorHandler = require("../utills/errorHandler")
 
 let Employee = require('../model/Employee');
  
 loginRoute.post('/login',async(req,res) => {
+  try{
     const user = await Employee.findOne({
       email: req.body.email
     })
@@ -18,26 +17,23 @@ loginRoute.post('/login',async(req,res) => {
     if(passwordResult){
       const token = jwt.sign({
           email: user.email,
-          userId: user._id,
+          id: user._id,
           role: user.role,
       },keys.jwt,{expiresIn: 60 * 60})
         res.status(200).json({
           email: user.email,
-          userId: user._id,
+          id: user._id,
           role: user.role,
           name:user.name,
           phone: user.phone,
           birthday: user.birthday,
           position: user.position,
           salary: user.salary,
+          password: user.password,
           info: user.info,
           file:user.file,
           toDoList:user.toDoList
-
-          
-
-
-      })
+        })
       }else{
         res.status(401).json({
           massage: "Incorrect password"
@@ -47,7 +43,11 @@ loginRoute.post('/login',async(req,res) => {
       res.status(404).json({
         massage: "User is not found"
       })
+    }} catch(error) {
+      res.status(error.response.status)
+      return res.send(error.message);
     }
+
   })
 
   module.exports = loginRoute;
