@@ -7,6 +7,7 @@ const keys = require("../database/db")
 let Employee = require('../model/Employee');
  
 loginRoute.post('/login',async(req,res) => {
+  try{
     const user = await Employee.findOne({
       email: req.body.email
     })
@@ -28,14 +29,11 @@ loginRoute.post('/login',async(req,res) => {
           birthday: user.birthday,
           position: user.position,
           salary: user.salary,
+          password: user.password,
           info: user.info,
           file:user.file,
           toDoList:user.toDoList
-
-          
-
-
-      })
+        })
       }else{
         res.status(401).json({
           massage: "Incorrect password"
@@ -45,7 +43,11 @@ loginRoute.post('/login',async(req,res) => {
       res.status(404).json({
         massage: "User is not found"
       })
+    }} catch(error) {
+      res.status(error.response.status)
+      return res.send(error.message);
     }
+
   })
 
   module.exports = loginRoute;

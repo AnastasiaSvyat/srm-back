@@ -29,7 +29,7 @@ eventRoute.route('/get-event').get((req, res) => {
 
 // Get Event 
 eventRoute.route('/read-event/:id').get((req, res) => {
-    Event.findById(req.params.id, (error, data) => {
+  Events.findById(req.params.id, (error, data) => {
     if (error) {
       return next(error)
     } else {
@@ -41,7 +41,7 @@ eventRoute.route('/read-event/:id').get((req, res) => {
 
 // Update Event
 eventRoute.route('/update-event/:id').put((req, res, next) => {
-    Event.findByIdAndUpdate(req.params.id, {
+    EveEventsnt.findByIdAndUpdate(req.params.id, {
     $set: req.body
   }, (error, data) => {
     if (error) {
@@ -56,7 +56,7 @@ eventRoute.route('/update-event/:id').put((req, res, next) => {
 // Delete Event
 eventRoute.route('/delete-event/:id').delete((req, res, next) => {
   
-    Event.findByIdAndRemove(req.params.id, (error, data) => {
+  Events.findByIdAndRemove(req.params.id, (error, data) => {
     if (error) {
       return next(error);
     } else {
