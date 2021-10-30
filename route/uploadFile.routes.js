@@ -39,8 +39,6 @@ var upload = multer({storage: storage});
 uploadFileRoute.route('/get-uplFile').get((req, res) => {
   const email = req.query.email
   var condition = email ? { email:  email} : {};
-  console.log(email);
-  console.log(condition);
 
   UploadFile.find(condition)
     .then(data => {

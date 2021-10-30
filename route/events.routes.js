@@ -18,13 +18,52 @@ eventRoute.route('/add-event').post((req, res, next) => {
 
 // Get all Events
 eventRoute.route('/get-event').get((req, res) => {
-    Events.find((error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      res.json(data)
-    }
+  const matchСheck = {
+    year: req.query.year
+}
+  var condition = matchСheck ? {year:matchСheck.year} : {};
+  Events.find(condition)
+  .then(data => {
+    res.send(data);
   })
+  .catch(err => {
+    res.status(500).send({
+  });
+  });
+})
+
+eventRoute.route('/getEvent-today').get((req, res) => {
+  const matchСheck = {
+    day: req.query.day,
+    year: req.query.year
+}
+  var condition = matchСheck ? { day:  matchСheck.day, year:matchСheck.year} : {};
+  console.log('dd',condition);
+  Events.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
+})
+
+eventRoute.route('/getEvent-month').get((req, res) => {
+  const matchСheck = {
+    month: req.query.month,
+    year: req.query.year
+}
+  var condition = matchСheck ? { month:  matchСheck.month, year:matchСheck.year} : {};
+  console.log('dd',condition);
+  Events.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
 })
 
 // Get Event 

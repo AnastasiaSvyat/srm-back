@@ -14,6 +14,15 @@ let Events = new Schema({
   description: {
     type: String
   },
+  day:{
+    type: String
+  },
+  month:{
+    type: String
+  },
+  year:{
+    type: String
+  },
 }, {
   collection: 'events'
 })

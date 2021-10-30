@@ -5,13 +5,21 @@ let ToDoList = new Schema({
   task: {
     type: String
   },
-  date:{
+  day:{
     type: String
   },
   email:{
     type: String
-  }
- 
+  },
+  date:{
+    type: String
+  },
+  week:{
+    type: String
+  },
+  year:{
+    type: String
+  },
 }, {
   collection: 'toDoList'
 })

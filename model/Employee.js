@@ -12,6 +12,12 @@ const Employee = new mongoose.Schema({
   birthday:{
     type: String
   },
+  dayBirth:{
+    type: String
+  },
+  monthBirth:{
+    type: String
+  },
   salary:{
     type: Number
   },

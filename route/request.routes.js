@@ -40,6 +40,27 @@ requestRoute.route('/get-request').get((req, res) => {
     });
 })
 
+requestRoute.route('/get-reqEmail').get((req, res) => {
+  const matchСheck = {
+    confirm: req.query.confirm,
+    decline : req.query.decline,
+    email: req.query.email
+  }
+
+  var condition = matchСheck ? { decline:  matchСheck.decline, confirm : matchСheck.confirm, email:  matchСheck.email,} : {};
+  
+  Request.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
+})
+
+
+
 // Get Request 
 requestRoute.route('/read-request/:id').get((req, res) => {
     Request.findById(req.params.id, (error, data) => {
@@ -51,7 +72,43 @@ requestRoute.route('/read-request/:id').get((req, res) => {
   })
 })
 
+requestRoute.route('/true-reqEmail').get((req, res) => {
+ 
+  const matchСheck = {
+    confirm: req.query.confirm,
+    email: req.query.email
+  }
 
+  var condition = matchСheck ? { confirm : matchСheck.confirm, email:  matchСheck.email,} : {};
+  
+  Request.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
+});
+
+requestRoute.route('/false-reqEmail').get((req, res) => {
+ 
+  const matchСheck = {
+    decline : req.query.decline,
+    email: req.query.email
+  }
+
+  var condition = matchСheck ? { decline:  matchСheck.decline, email:  matchСheck.email,} : {};
+  
+  Request.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
+});
 
 requestRoute.route('/true-request').get((req, res) => {
  

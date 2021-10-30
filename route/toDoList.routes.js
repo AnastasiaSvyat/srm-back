@@ -22,12 +22,48 @@ toDoListRoute.route('/add-task').post((req, res, next) => {
 
 
 // Get all Events
-toDoListRoute.route('/get-task').get((req, res) => {
-  const email = req.query.email
-  var condition = email ? { email:  email} : {};
-  console.log(email);
-  console.log(condition);
+toDoListRoute.route('/get-taskWeek').get((req, res) => {
+  const matchСheck = {
+    email : req.query.email,
+    week: req.query.week,
+    year: req.query.year
+}
+  var condition = matchСheck ? { week:  matchСheck.week, email:  matchСheck.email,year:matchСheck.year} : {};
+  ToDoList.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
+})
 
+toDoListRoute.route('/get-taskTomorrow').get((req, res) => {
+  const matchСheck = {
+    email : req.query.email,
+    day: req.query.day,
+    year: req.query.year
+  }
+  var condition = matchСheck ? { day:  matchСheck.day, email:  matchСheck.email,year:matchСheck.year} : {};
+  ToDoList.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
+})
+
+toDoListRoute.route('/get-taskDate').get((req, res) => {
+  const matchСheck = {
+    day : req.query.day,
+    email: req.query.email,
+    year: req.query.year
+  }
+
+  var condition = matchСheck ? { day:  matchСheck.day, email:  matchСheck.email, year:matchСheck.year} : {};
   ToDoList.find(condition)
     .then(data => {
       res.send(data);

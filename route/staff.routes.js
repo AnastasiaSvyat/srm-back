@@ -45,6 +45,8 @@ staffRoute.post('/add-employee',async(req,res) => {
     info: req.body.info,
     file:req.body.file,
     toDoList:req.body.toDoList,
+    dayBirth:req.body.dayBirth,
+    monthBirth:req.body.monthBirth,
     id: req.body._id,
     password: bcrypt.hashSync(password,salt)
   })
@@ -121,6 +123,35 @@ staffRoute.route('/update-employee/:id').put((req, res, next) => {
   })
 })
 
+staffRoute.route('/getEmpl-Today').get((req, res) => {
+  const matchСheck = {
+    dayBirth: req.query.dayBirth,
+  }
+  var condition = matchСheck ? { dayBirth:  matchСheck.dayBirth } : {};
+  Employee.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
+})
+
+staffRoute.route('/getEmpl-Month').get((req, res) => {
+  const matchСheck = {
+    monthBirth: req.query.monthBirth,
+  }
+  var condition = matchСheck ? { monthBirth:  matchСheck.monthBirth } : {};
+  Employee.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
+})
 
 // Delete employee
 staffRoute.route('/delete-employee/:id').delete((req, res, next) => {
