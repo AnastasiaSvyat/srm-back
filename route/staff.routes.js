@@ -35,7 +35,7 @@ staffRoute.post('/add-employee',async(req,res) => {
   const password = req.body.password
   const user = new Employee({
     position: req.body.position,
-    birthday: req.body.birthday,
+    date: req.body.date,
     name: req.body.name,
     email: req.body.email,
     salary: req.body.salary,

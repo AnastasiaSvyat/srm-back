@@ -9,7 +9,7 @@ const Employee = new mongoose.Schema({
   position:{
     type: String
   },
-  birthday:{
+  date:{
     type: String
   },
   dayBirth:{

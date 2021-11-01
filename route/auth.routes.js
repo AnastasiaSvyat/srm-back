@@ -26,7 +26,7 @@ loginRoute.post('/login',async(req,res) => {
           role: user.role,
           name:user.name,
           phone: user.phone,
-          birthday: user.birthday,
+          date: user.date,
           position: user.position,
           salary: user.salary,
           password: user.password,
