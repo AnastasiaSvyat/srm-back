@@ -124,6 +124,21 @@ requestRoute.route('/true-request').get((req, res) => {
     });
     });
 });
+requestRoute.route('/trueRequest-month').get((req, res) => {
+  const matchСheck = {
+    confirm : req.query.confirm,
+    month: req.query.month,
+}
+  var condition = matchСheck ? { confirm:  matchСheck.confirm, month:  matchСheck.month} : {};
+  Request.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
+});
 
 requestRoute.route('/false-request').get((req, res) => {
  

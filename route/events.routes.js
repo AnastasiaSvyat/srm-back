@@ -54,7 +54,6 @@ eventRoute.route('/getEvent-month').get((req, res) => {
     year: req.query.year
 }
   var condition = matchСheck ? { month:  matchСheck.month, year:matchСheck.year} : {};
-  console.log('dd',condition);
   Events.find(condition)
     .then(data => {
       res.send(data);

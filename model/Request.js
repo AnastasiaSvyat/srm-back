@@ -8,9 +8,12 @@ let Request = new Schema({
   type:{
     type: String
   },
-  startDate:{
+  date:{
     type: String
   },
+  month:{
+    type: String
+  }, 
   endDate: {
     type: String
   },
