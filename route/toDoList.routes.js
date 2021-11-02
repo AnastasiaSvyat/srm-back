@@ -46,6 +46,7 @@ toDoListRoute.route('/get-taskTomorrow').get((req, res) => {
     year: req.query.year
   }
   var condition = matchСheck ? { day:  matchСheck.day, email:  matchСheck.email,year:matchСheck.year} : {};
+  console.log(condition);
   ToDoList.find(condition)
     .then(data => {
       res.send(data);

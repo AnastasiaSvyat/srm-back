@@ -38,7 +38,6 @@ eventRoute.route('/getEvent-today').get((req, res) => {
     year: req.query.year
 }
   var condition = matchСheck ? { day:  matchСheck.day, year:matchСheck.year} : {};
-  console.log('dd',condition);
   Events.find(condition)
     .then(data => {
       res.send(data);

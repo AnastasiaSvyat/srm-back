@@ -20,6 +20,9 @@ let ToDoList = new Schema({
   year:{
     type: String
   },
+  isChecked:{
+    type:Boolean
+  }
 }, {
   collection: 'toDoList'
 })
