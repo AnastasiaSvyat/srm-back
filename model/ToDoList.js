@@ -20,6 +20,9 @@ let ToDoList = new Schema({
   year:{
     type: String
   },
+  month:{
+    type: String
+  },
   isChecked:{
     type:Boolean
   }

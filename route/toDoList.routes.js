@@ -43,10 +43,12 @@ toDoListRoute.route('/get-taskTomorrow').get((req, res) => {
   const matchСheck = {
     email : req.query.email,
     day: req.query.day,
-    year: req.query.year
+    year: req.query.year,
+    month: req.query.month,
+
   }
-  var condition = matchСheck ? { day:  matchСheck.day, email:  matchСheck.email,year:matchСheck.year} : {};
-  console.log(condition);
+  var condition = matchСheck ? { month:  matchСheck.month, day:  matchСheck.month, day:  matchСheck.email,year:matchСheck.year} : {};
+  console.log('z',condition);
   ToDoList.find(condition)
     .then(data => {
       res.send(data);
@@ -61,10 +63,13 @@ toDoListRoute.route('/get-taskDate').get((req, res) => {
   const matchСheck = {
     day : req.query.day,
     email: req.query.email,
-    year: req.query.year
+    year: req.query.year,
+    month: req.query.month
+    
+
   }
 
-  var condition = matchСheck ? { day:  matchСheck.day, email:  matchСheck.email, year:matchСheck.year} : {};
+  var condition = matchСheck ? { month:  matchСheck.month, day:  matchСheck.day, email:  matchСheck.email, year:matchСheck.year} : {};
   ToDoList.find(condition)
     .then(data => {
       res.send(data);

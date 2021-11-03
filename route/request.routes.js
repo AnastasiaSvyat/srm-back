@@ -193,5 +193,18 @@ requestRoute.route('/delete-request/:id').delete((req, res, next) => {
     }
   })
 })
+// Delete request
+requestRoute.route('/delete-request/:id').delete((req, res, next) => {
+  
+  Request.findByIdAndRemove(req.params.id, (error, data) => {
+  if (error) {
+    return next(error);
+  } else {
+    res.status(200).json({
+      msg: data
+    })
+  }
+})
+})
 
 module.exports = requestRoute;
