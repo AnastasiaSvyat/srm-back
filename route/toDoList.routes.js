@@ -1,88 +1,74 @@
 const express = require('express');
-const app = express();
 const toDoListRoute = express.Router();
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const keys = require("../database/db")
-const errorHandler = require("../utills/errorHandler")
-
+var moment = require('moment')
+var today = moment().format('YYYY-MM-DD');
+var week = moment().add(7, 'days').format('YYYY-MM-DD');
+var tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
 let ToDoList = require('../model/ToDoList');
- 
+
 // Add Event
 toDoListRoute.route('/add-task').post((req, res, next) => {
-    ToDoList.create(req.body, (error, data) => {
-  if (error) {
-    return next(error)
-  } else {
-    res.json(data)
-    console.log(data);
-  }
-})
+  req.body.date = moment(req.body.date).format('YYYY-MM-DD');
+  ToDoList.create(req.body, (error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      res.json(data)
+      console.log(data);
+    }
+  })
 });
 
 
 // Get all Events
 toDoListRoute.route('/get-taskWeek').get((req, res) => {
   const matchСheck = {
-    email : req.query.email,
-    week: req.query.week,
-    year: req.query.year
-}
-  var condition = matchСheck ? { week:  matchСheck.week, email:  matchСheck.email,year:matchСheck.year} : {};
+    email: req.query.email,
+  }
+  var condition = matchСheck ? { email: matchСheck.email, date: { $gt: tomorrow, $lte: week } } : {};
   ToDoList.find(condition)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-    });
+      });
     });
 })
 
 toDoListRoute.route('/get-taskTomorrow').get((req, res) => {
   const matchСheck = {
-    email : req.query.email,
-    day: req.query.day,
-    year: req.query.year,
-    month: req.query.month,
-
+    email: req.query.email,
   }
-  var condition = matchСheck ? { month:  matchСheck.month, day:  matchСheck.month, day:  matchСheck.email,year:matchСheck.year} : {};
-  console.log('z',condition);
+  var condition = matchСheck ? { email: matchСheck.email, date: { $eq: tomorrow } } : {};
   ToDoList.find(condition)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-    });
+      });
     });
 })
 
 toDoListRoute.route('/get-taskDate').get((req, res) => {
   const matchСheck = {
-    day : req.query.day,
     email: req.query.email,
-    year: req.query.year,
-    month: req.query.month
-    
-
   }
-
-  var condition = matchСheck ? { month:  matchСheck.month, day:  matchСheck.day, email:  matchСheck.email, year:matchСheck.year} : {};
+  var condition = matchСheck ? { email: matchСheck.email, date: { $eq: today } } : {};
   ToDoList.find(condition)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-    });
+      });
     });
 })
 
 // Get Event 
 toDoListRoute.route('/read-task/:id').get((req, res) => {
-    ToDoList.findById(req.params.id, (error, data) => {
+  ToDoList.findById(req.params.id, (error, data) => {
     if (error) {
       return next(error)
     } else {
@@ -94,7 +80,7 @@ toDoListRoute.route('/read-task/:id').get((req, res) => {
 
 // Update Event
 toDoListRoute.route('/update-task/:id').put((req, res, next) => {
-    ToDoList.findByIdAndUpdate(req.params.id, {
+  ToDoList.findByIdAndUpdate(req.params.id, {
     $set: req.body
   }, (error, data) => {
     if (error) {
@@ -108,8 +94,8 @@ toDoListRoute.route('/update-task/:id').put((req, res, next) => {
 
 // Delete Event
 toDoListRoute.route('/delete-task/:id').delete((req, res, next) => {
-  
-    ToDoList.findByIdAndRemove(req.params.id, (error, data) => {
+
+  ToDoList.findByIdAndRemove(req.params.id, (error, data) => {
     if (error) {
       return next(error);
     } else {

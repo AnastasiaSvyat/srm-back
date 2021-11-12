@@ -1,15 +1,13 @@
 const express = require('express');
-const app = express();
 const requestRoute = express.Router();
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const keys = require("../database/db")
-const errorHandler = require("../utills/errorHandler")
-
+var moment = require('moment')
+var today = moment().format('YYYY-MM-DD');
+var month = moment().format('YYYY-MM-31');
 let Request = require('../model/Request');
  
 // Add Request
 requestRoute.route('/add-request').post((req, res, next) => {
+  req.body.date = moment(req.body.date).format('YYYY-MM-DD');
     Request.create(req.body, (error, data) => {
   if (error) {
     return next(error)
@@ -23,12 +21,11 @@ requestRoute.route('/add-request').post((req, res, next) => {
 
 // Get all Request
 requestRoute.route('/get-request').get((req, res) => {
-  const dd = {
+  const reqq = {
     confirm: req.query.confirm,
     decline : req.query.decline
   }
-  console.log(dd);
-  var condition = dd ? { decline:  dd.decline, confirm : dd.confirm} : {};
+  var condition = reqq ? { decline:  reqq.decline, confirm : reqq.confirm} : {};
   
   Request.find(condition)
     .then(data => {
@@ -61,7 +58,7 @@ requestRoute.route('/get-reqEmail').get((req, res) => {
 
 
 
-// Get Request 
+// Get Request ById
 requestRoute.route('/read-request/:id').get((req, res) => {
     Request.findById(req.params.id, (error, data) => {
     if (error) {
@@ -72,6 +69,7 @@ requestRoute.route('/read-request/:id').get((req, res) => {
   })
 })
 
+// confirm Req  BY   email
 requestRoute.route('/true-reqEmail').get((req, res) => {
  
   const matchСheck = {
@@ -91,6 +89,7 @@ requestRoute.route('/true-reqEmail').get((req, res) => {
     });
 });
 
+// decline request by email
 requestRoute.route('/false-reqEmail').get((req, res) => {
  
   const matchСheck = {
@@ -110,6 +109,7 @@ requestRoute.route('/false-reqEmail').get((req, res) => {
     });
 });
 
+// confirm request
 requestRoute.route('/true-request').get((req, res) => {
  
   const confirm = req.query.confirm
@@ -124,13 +124,15 @@ requestRoute.route('/true-request').get((req, res) => {
     });
     });
 });
+
+// confirm request month
+
 requestRoute.route('/trueRequest-month').get((req, res) => {
   const matchСheck = {
     confirm : req.query.confirm,
-    month: req.query.month,
 }
-  var condition = matchСheck ? { confirm:  matchСheck.confirm, month:  matchСheck.month} : {};
-  Request.find(condition)
+  var condition = matchСheck ? { confirm:  matchСheck.confirm, date: { $gte: today, $lte: month } } : {};
+  Request.find(condition).sort({date:1})
     .then(data => {
       res.send(data);
     })
@@ -140,6 +142,42 @@ requestRoute.route('/trueRequest-month').get((req, res) => {
     });
 });
 
+// confirm request later
+requestRoute.route('/trueRequest-Later').get((req, res) => {
+  const matchСheck = {
+    confirm : req.query.confirm,
+}
+  var condition = matchСheck ? { confirm:  matchСheck.confirm, date: { $gt: month }} : {};
+  Request.find(condition).sort({date:1})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
+});
+
+
+// confirmrequestLaterSelectEmployee
+requestRoute.route('/trueRequestEmployee-Later').get((req, res) => {
+  const matchСheck = {
+    confirm : req.query.confirm,
+    email: req.query.email
+}
+  var condition = matchСheck ? { email:  matchСheck.email, confirm:  matchСheck.confirm, date: { $gte: today }} : {};
+  Request.find(condition).sort({date:1})
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+    });
+    });
+});
+
+
+// decline request
 requestRoute.route('/false-request').get((req, res) => {
  
   const decline = req.query.decline
@@ -154,17 +192,6 @@ requestRoute.route('/false-request').get((req, res) => {
     });
     });
 });
-
-requestRoute.route('/trure-request/:confirm').get((req, res) => {
-  Request.findById(req.params.id, (error, data) => {
-  if (error) {
-    return next(error)
-  } else {
-    res.json(data)
-  }
-})
-})
-
 
 
 // Update Request
@@ -193,18 +220,7 @@ requestRoute.route('/delete-request/:id').delete((req, res, next) => {
     }
   })
 })
-// Delete request
-requestRoute.route('/delete-request/:id').delete((req, res, next) => {
-  
-  Request.findByIdAndRemove(req.params.id, (error, data) => {
-  if (error) {
-    return next(error);
-  } else {
-    res.status(200).json({
-      msg: data
-    })
-  }
-})
-})
+
+
 
 module.exports = requestRoute;

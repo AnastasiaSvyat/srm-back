@@ -5,25 +5,13 @@ let ToDoList = new Schema({
   task: {
     type: String
   },
-  day:{
+  date:{
     type: String
   },
   email:{
     type: String
   },
-  date:{
-    type: String
-  },
-  week:{
-    type: String
-  },
-  year:{
-    type: String
-  },
-  month:{
-    type: String
-  },
-  isChecked:{
+  select:{
     type:Boolean
   }
 }, {
