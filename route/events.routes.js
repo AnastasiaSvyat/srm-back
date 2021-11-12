@@ -53,6 +53,20 @@ eventRoute.route('/getEvent-today').get((req, res) => {
     });
 })
 
+
+// eventSelect
+eventRoute.route('/getEvent-Select').get((req, res) => {
+console.log(req.query.date);
+  Events.find({ date: { $eq: req.query.date } })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+      });
+    });
+})
+
 // monthEvents
 eventRoute.route('/getEvent-month').get((req, res) => {
   Events.find({ date: { $gt: today, $lte: month } }).sort({ date: 1 })
