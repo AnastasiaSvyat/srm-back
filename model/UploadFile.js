@@ -12,7 +12,12 @@ let UploadFile = new Schema({
     type: Date, 
     default: Date.now 
   },
-
+  uplUrl:{
+    type: String
+  },
+  file:{
+    type: Array
+  }
 }, {
   collection: 'uploadFile'
 })
