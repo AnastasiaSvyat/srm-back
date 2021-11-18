@@ -30,17 +30,6 @@ eventRoute.route('/getEvent-Later').get((req, res, next) => {
     });
 })
 
-// get all Events
-eventRoute.route('/getEvent').get((req, res) => {
-  Events.find((error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      res.json(data)
-    }
-  })
-})
-
 // todayEvents
 eventRoute.route('/getEvent-today').get((req, res) => {
   Events.find({ date: { $eq: today } })
@@ -56,7 +45,7 @@ eventRoute.route('/getEvent-today').get((req, res) => {
 
 // eventSelect
 eventRoute.route('/getEvent-Select').get((req, res) => {
-console.log(req.query.date);
+  console.log(req.query.date);
   Events.find({ date: { $eq: req.query.date } })
     .then(data => {
       res.send(data);
@@ -78,18 +67,6 @@ eventRoute.route('/getEvent-month').get((req, res) => {
       });
     });
 })
-
-// Get EventByID 
-eventRoute.route('/read-event/:id').get((req, res) => {
-  Events.findById(req.params.id, (error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      res.json(data)
-    }
-  })
-})
-
 
 // Update Event
 eventRoute.route('/update-event/:id').put((req, res, next) => {

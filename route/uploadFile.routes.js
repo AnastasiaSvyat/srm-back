@@ -26,20 +26,18 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage });
 uploadFileRoute.route('/uplFile', upload.single('file')).post((req, res, next) => {
-  // const url = req.protocol + '://' + req.get('host')
-// console.log(url);
   req.body.uplUrl = 'http://192.168.0.7:3000/images/' + req.body.name
   UploadFile.find({ email: req.query.email })
     .then(data => {
       if (data.length) {
-        UploadFile.findByIdAndRemove(data[0]._id, (error, data) => {
+        UploadFile.findByIdAndRemove(data[0]._id, () => {
           UploadFile.create(req.body, (error, data) => {
             if (error) {
               return next(error)
             } else {
               res.json(data)
             }
-        })
+          })
         })
       } else {
         UploadFile.create(req.body, (error, data) => {

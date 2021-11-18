@@ -22,10 +22,10 @@ toDoListRoute.route('/add-task').post((req, res, next) => {
 
 // Get all Events
 toDoListRoute.route('/get-taskWeek').get((req, res) => {
-  const matchСheck = {
+  const eventFilter = {
     email: req.query.email,
   }
-  var condition = matchСheck ? { email: matchСheck.email, date: { $gt: tomorrow, $lte: week } } : {};
+  var condition = eventFilter ? { email: eventFilter.email, date: { $gt: tomorrow, $lte: week } } : {};
   ToDoList.find(condition)
     .then(data => {
       res.send(data);
@@ -37,10 +37,10 @@ toDoListRoute.route('/get-taskWeek').get((req, res) => {
 })
 
 toDoListRoute.route('/get-taskTomorrow').get((req, res) => {
-  const matchСheck = {
+  const eventFilter = {
     email: req.query.email,
   }
-  var condition = matchСheck ? { email: matchСheck.email, date: { $eq: tomorrow } } : {};
+  var condition = eventFilter ? { email: eventFilter.email, date: { $eq: tomorrow } } : {};
   ToDoList.find(condition)
     .then(data => {
       res.send(data);
@@ -52,10 +52,10 @@ toDoListRoute.route('/get-taskTomorrow').get((req, res) => {
 })
 
 toDoListRoute.route('/get-taskDate').get((req, res) => {
-  const matchСheck = {
+  const eventFilter = {
     email: req.query.email,
   }
-  var condition = matchСheck ? { email: matchСheck.email, date: { $eq: today } } : {};
+  var condition = eventFilter ? { email: eventFilter.email, date: { $eq: today } } : {};
   ToDoList.find(condition)
     .then(data => {
       res.send(data);
@@ -94,7 +94,6 @@ toDoListRoute.route('/update-task/:id').put((req, res, next) => {
 
 // Delete Event
 toDoListRoute.route('/delete-task/:id').delete((req, res, next) => {
-
   ToDoList.findByIdAndRemove(req.params.id, (error, data) => {
     if (error) {
       return next(error);

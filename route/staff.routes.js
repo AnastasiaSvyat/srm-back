@@ -115,14 +115,14 @@ staffRoute.route('/read-employee/:id').get((req, res) => {
 staffRoute.route('/getBirth-Select').get((req, res) => {
   console.log(req.query);
   Employee.find({ dateWithOutYear: { $eq: req.query.date } })
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-        });
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
       });
-  })
+    });
+})
 
 
 // Update employee
