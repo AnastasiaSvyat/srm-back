@@ -42,7 +42,6 @@ eventRoute.route('/getEvent-today').get((req, res) => {
     });
 })
 
-
 // eventSelect
 eventRoute.route('/getEvent-Select').get((req, res) => {
   console.log(req.query.date);

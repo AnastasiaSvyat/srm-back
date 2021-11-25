@@ -4,7 +4,6 @@ let express = require('express'),
   cors = require('cors'),
   bodyParser = require('body-parser'),
   mongoDb = require('./database/db');
-  
 const fileUpload = require('express-fileupload');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
@@ -15,8 +14,8 @@ mongoose.connect(mongoDb.db, {
   useFindAndModify: false,
   useUnifiedTopology: true
 }).then(() => {
-    console.log('Database sucessfully connected ')
-  },
+  console.log('Database sucessfully connected ')
+},
   error => {
     console.log('Database error: ' + error)
   }
@@ -24,19 +23,19 @@ mongoose.connect(mongoDb.db, {
 const staffRoute = require('./route/staff.routes')
 const eventRoute = require('./route/events.routes')
 const authRoute = require('./route/auth.routes')
-const uploadFile = require('./route/uploadFile.routes')
+const uploadCVRoute = require('./route/uploadCV.routes')
+const uploadPhotoRoute = require('./route/uploadPhoto.routes')
 const requestRoute = require('./route/request.routes')
 const toDoListRoute = require('./route/toDoList.routes')
 
 
-
-
-
 const app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors());
 app.use(fileUpload());
+
+
 
 
 // Static directory path
@@ -47,13 +46,10 @@ app.use(express.static(path.join(__dirname, 'dist/srm-master')));
 app.use('/api', staffRoute)
 app.use('/api', eventRoute)
 app.use('/api', authRoute)
-app.use('/api', uploadFile)
-
+app.use('/api', uploadCVRoute)
 app.use('/api', requestRoute)
-
 app.use('/api', toDoListRoute)
-
-
+app.use('/api', uploadPhotoRoute)
 
 
 

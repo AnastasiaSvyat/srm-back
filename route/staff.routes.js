@@ -52,6 +52,7 @@ staffRoute.post('/add-employee', async (req, res) => {
       toDoList: req.body.toDoList,
       dateWithOutYear: dateWithOutYear,
       id: req.body._id,
+      image: req.body.image,
       password: bcrypt.hashSync(password, salt)
     })
     try {

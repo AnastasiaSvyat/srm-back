@@ -48,7 +48,6 @@ loginRoute.post('/login', async (req, res) => {
     res.status(error.response.status)
     return res.send(error.message);
   }
-
 })
 
 module.exports = loginRoute;

@@ -18,7 +18,6 @@ requestRoute.route('/add-request').post((req, res, next) => {
   })
 });
 
-
 // Get pending Request
 requestRoute.route('/get-request').get((req, res) => {
   const reqFilter = {
@@ -42,9 +41,7 @@ requestRoute.route('/get-reqEmail').get((req, res) => {
     decline: req.query.decline,
     email: req.query.email
   }
-
   var condition = reqFilter ? { decline: reqFilter.decline, confirm: reqFilter.confirm, email: reqFilter.email, } : {};
-
   Request.find(condition)
     .then(data => {
       res.send(data);
@@ -54,8 +51,6 @@ requestRoute.route('/get-reqEmail').get((req, res) => {
       });
     });
 })
-
-
 
 // Get Request ById
 requestRoute.route('/read-request/:id').get((req, res) => {
@@ -70,14 +65,11 @@ requestRoute.route('/read-request/:id').get((req, res) => {
 
 // confirm Req  BY   email
 requestRoute.route('/true-reqEmail').get((req, res) => {
-
   const reqFilter = {
     confirm: req.query.confirm,
     email: req.query.email
   }
-
   var condition = reqFilter ? { confirm: reqFilter.confirm, email: reqFilter.email, } : {};
-
   Request.find(condition)
     .then(data => {
       res.send(data);
@@ -90,14 +82,11 @@ requestRoute.route('/true-reqEmail').get((req, res) => {
 
 // decline request by email
 requestRoute.route('/false-reqEmail').get((req, res) => {
-
   const reqFilter = {
     decline: req.query.decline,
     email: req.query.email
   }
-
   var condition = reqFilter ? { decline: reqFilter.decline, email: reqFilter.email, } : {};
-
   Request.find(condition)
     .then(data => {
       res.send(data);
@@ -110,10 +99,8 @@ requestRoute.route('/false-reqEmail').get((req, res) => {
 
 // confirm request
 requestRoute.route('/true-request').get((req, res) => {
-
   const confirm = req.query.confirm
-  var condition = confirm ? { confirm: confirm } : {};
-
+  var condition = confirm ? { confirm: confirm, date: { $gte: today } } : {};
   Request.find(condition)
     .then(data => {
       res.send(data);
@@ -125,7 +112,6 @@ requestRoute.route('/true-request').get((req, res) => {
 });
 
 // confirm request month
-
 requestRoute.route('/trueRequest-month').get((req, res) => {
   const reqFilter = {
     confirm: req.query.confirm,
@@ -178,10 +164,8 @@ requestRoute.route('/trueRequestEmployee-Later').get((req, res) => {
 
 // decline request
 requestRoute.route('/false-request').get((req, res) => {
-
   const decline = req.query.decline
   var condition = decline ? { decline: decline } : {};
-
   Request.find(condition)
     .then(data => {
       res.send(data);
