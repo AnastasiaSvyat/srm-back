@@ -29,7 +29,7 @@ uploadPhotoRoute.route('/uploadPhoto', upload.single('file')).post((req, res, ne
   const { name } = req.body;
   const { email } = req.body;
   var bufDataFile = Buffer.from(req.files.image.data).toString('base64')
-  const imagePath = "data:image/jpeg;base64," + bufDataFile; // Note: set path dynamically
+  const imagePath = "data:image/jpeg;base64," + bufDataFile;
   const dataPhoto = new UploadPhoto({
     name,
     imagePath,
