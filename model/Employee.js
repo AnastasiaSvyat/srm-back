@@ -44,7 +44,7 @@ const Employee = new mongoose.Schema({
   },
   file: {
     type:Array
-  }
+  },
 }, {
   collection: 'employee'
 

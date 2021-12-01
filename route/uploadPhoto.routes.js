@@ -74,4 +74,14 @@ uploadPhotoRoute.route('/getPhotoEmployee').get((req, res) => {
     });
 })
 
+uploadPhotoRoute.route('/getPhoto').get((req, res) => {
+  UploadPhoto.find((error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      res.json(data)
+    }
+  })
+})
+
 module.exports = uploadPhotoRoute;

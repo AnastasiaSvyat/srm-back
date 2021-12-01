@@ -13,7 +13,7 @@ let ToDoList = new Schema({
   },
   select:{
     type:Boolean
-  }
+  },
 }, {
   collection: 'toDoList'
 })
