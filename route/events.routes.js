@@ -35,6 +35,7 @@ eventRoute.route('/getEvent-today').get((req, res) => {
   Events.find({ date: { $eq: today } })
     .then(data => {
       res.send(data);
+      console.log('l',data);
     })
     .catch(err => {
       res.status(500).send({

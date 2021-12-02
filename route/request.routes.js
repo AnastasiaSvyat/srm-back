@@ -35,13 +35,13 @@ requestRoute.route('/get-request').get((req, res) => {
     });
 })
 
-requestRoute.route('/get-reqEmail').get((req, res) => {
+requestRoute.route('/get-reqById').get((req, res) => {
   const reqFilter = {
     confirm: req.query.confirm,
     decline: req.query.decline,
-    email: req.query.email
+    idEmployee: req.query.idEmployee
   }
-  var condition = reqFilter ? { decline: reqFilter.decline, confirm: reqFilter.confirm, email: reqFilter.email, } : {};
+  var condition = reqFilter ? { decline: reqFilter.decline, confirm: reqFilter.confirm, idEmployee: reqFilter.idEmployee, } : {};
   Request.find(condition)
     .then(data => {
       res.send(data);
@@ -64,12 +64,12 @@ requestRoute.route('/read-request/:id').get((req, res) => {
 })
 
 // confirm Req  BY   email
-requestRoute.route('/true-reqEmail').get((req, res) => {
+requestRoute.route('/true-reqById').get((req, res) => {
   const reqFilter = {
     confirm: req.query.confirm,
-    email: req.query.email
+    idEmployee: req.query.idEmployee
   }
-  var condition = reqFilter ? { confirm: reqFilter.confirm, email: reqFilter.email, } : {};
+  var condition = reqFilter ? { confirm: reqFilter.confirm, idEmployee: reqFilter.idEmployee, } : {};
   Request.find(condition)
     .then(data => {
       res.send(data);
@@ -81,12 +81,12 @@ requestRoute.route('/true-reqEmail').get((req, res) => {
 });
 
 // decline request by email
-requestRoute.route('/false-reqEmail').get((req, res) => {
+requestRoute.route('/false-reqById').get((req, res) => {
   const reqFilter = {
     decline: req.query.decline,
-    email: req.query.email
+    idEmployee: req.query.idEmployee
   }
-  var condition = reqFilter ? { decline: reqFilter.decline, email: reqFilter.email, } : {};
+  var condition = reqFilter ? { decline: reqFilter.decline, idEmployee: reqFilter.idEmployee, } : {};
   Request.find(condition)
     .then(data => {
       res.send(data);
@@ -148,9 +148,9 @@ requestRoute.route('/trueRequest-Later').get((req, res) => {
 requestRoute.route('/trueRequestEmployee-Later').get((req, res) => {
   const reqFilter = {
     confirm: req.query.confirm,
-    email: req.query.email
+    idEmployee: req.query.idEmployee
   }
-  var condition = reqFilter ? { email: reqFilter.email, confirm: reqFilter.confirm, date: { $gte: today } } : {};
+  var condition = reqFilter ? { idEmployee: reqFilter.idEmployee, confirm: reqFilter.confirm, date: { $gte: today } } : {};
   Request.find(condition).sort({ date: 1 })
     .then(data => {
       res.send(data);

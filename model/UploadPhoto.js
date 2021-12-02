@@ -8,7 +8,7 @@ let UploadPhoto = new Schema({
   imagePath:{
     type: String
   },
-  email:{
+  idEmployee:{
     type: String
   },
 }, {

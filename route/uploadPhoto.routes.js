@@ -27,18 +27,17 @@ const upload = multer({ storage: storage })
 
 uploadPhotoRoute.route('/uploadPhoto', upload.single('file')).post((req, res, next) => {
   const { name } = req.body;
-  const { email } = req.body;
+  const { idEmployee } = req.body;
   var bufDataFile = Buffer.from(req.files.image.data).toString('base64')
   const imagePath = "data:image/jpeg;base64," + bufDataFile;
   const dataPhoto = new UploadPhoto({
     name,
     imagePath,
-    email
+    idEmployee
   });
-  UploadPhoto.find({ email: req.body.email })
+  UploadPhoto.find({ idEmployee: req.body.idEmployee })
     .then(data => {
       if (data.length) {
-        console.log(req.body.email);
         UploadPhoto.findByIdAndRemove(data[0]._id, () => { })
         UploadPhoto.create(dataPhoto, (error, data) => {
           if (error) {
@@ -60,10 +59,9 @@ uploadPhotoRoute.route('/uploadPhoto', upload.single('file')).post((req, res, ne
     })
 });
 
-uploadPhotoRoute.route('/getPhotoEmployee').get((req, res) => {
-  const email = req.query.email
-  console.log(email);
-  var condition = email ? { email: email } : {};
+uploadPhotoRoute.route('/getPhotoEmployeeById').get((req, res) => {
+  const idEmployee = req.query.idEmployee
+  var condition = idEmployee ? { idEmployee: idEmployee } : {};
   UploadPhoto.find(condition)
     .then(data => {
       res.send(data);

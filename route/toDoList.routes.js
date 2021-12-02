@@ -22,10 +22,9 @@ toDoListRoute.route('/add-task').post((req, res, next) => {
 
 // Get all Events
 toDoListRoute.route('/get-taskWeek').get((req, res) => {
-  const eventFilter = {
-    email: req.query.email,
-  }
-  var condition = eventFilter ? { email: eventFilter.email, date: { $gt: tomorrow, $lte: week } } : {};
+  const idEmployee = req.query.idEmployee
+
+  var condition = idEmployee ? { idEmployee: idEmployee, date: { $gt: tomorrow, $lte: week } } : {};
   ToDoList.find(condition)
     .then(data => {
       res.send(data);
@@ -37,10 +36,9 @@ toDoListRoute.route('/get-taskWeek').get((req, res) => {
 })
 
 toDoListRoute.route('/get-taskTomorrow').get((req, res) => {
-  const eventFilter = {
-    email: req.query.email,
-  }
-  var condition = eventFilter ? { email: eventFilter.email, date: { $eq: tomorrow } } : {};
+  const idEmployee = req.query.idEmployee
+
+  var condition = idEmployee ? { idEmployee: idEmployee, date: { $eq: tomorrow } } : {};
   ToDoList.find(condition)
     .then(data => {
       res.send(data);
@@ -52,10 +50,8 @@ toDoListRoute.route('/get-taskTomorrow').get((req, res) => {
 })
 
 toDoListRoute.route('/get-taskDate').get((req, res) => {
-  const eventFilter = {
-    email: req.query.email,
-  }
-  var condition = eventFilter ? { email: eventFilter.email, date: { $eq: today } } : {};
+  const idEmployee = req.query.idEmployee
+  var condition = idEmployee ? { idEmployee: idEmployee, date: { $eq: today } } : {};
   ToDoList.find(condition)
     .then(data => {
       res.send(data);

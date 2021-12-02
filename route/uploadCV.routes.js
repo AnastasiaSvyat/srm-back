@@ -26,16 +26,15 @@ const upload = multer({ storage: storage })
 
 CVFileRoute.route('/uplFile', upload.single('file')).post((req, res, next) => {
   const { name } = req.body;
-  const { email } = req.body;
-  console.log('f',req.files);
+  const { idEmployee } = req.body;
   var bufDataFile = Buffer.from(req.files.cv.data).toString('base64')
   const imagePath = "data:application/pdf;base64," + bufDataFile;
   const dataCv = new CVFile({
     name,
     imagePath,
-    email
+    idEmployee
   });
-  var condition = email ? { email: req.body.email } : {};
+  var condition = idEmployee ? { idEmployee: req.body.idEmployee } : {};
   CVFile.find(condition)
     .then(data => {
       if (data.length) {
@@ -60,9 +59,9 @@ CVFileRoute.route('/uplFile', upload.single('file')).post((req, res, next) => {
     })
 });
 
-CVFileRoute.route('/getCVFile').get((req, res) => {
-  const email = req.query.email
-  var condition = email ? { email: email } : {};
+CVFileRoute.route('/getCVFileById').get((req, res) => {
+  const idEmployee = req.query.idEmployee
+  var condition = idEmployee ? { idEmployee: idEmployee } : {};
   CVFile.find(condition)
     .then(data => {
       res.send(data);

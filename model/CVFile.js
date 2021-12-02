@@ -8,7 +8,7 @@ let CVFile = new Schema({
   imagePath:{
     type: String
   },
-  email:{
+  idEmployee:{
     type: String
   },
 }, {
