@@ -32,6 +32,7 @@ eventRoute.route('/getEvent-Later').get((req, res, next) => {
 
 // todayEvents
 eventRoute.route('/getEvent-today').get((req, res) => {
+  console.log(today);
   Events.find({ date: { $eq: today } })
     .then(data => {
       res.send(data);

@@ -127,6 +127,7 @@ staffRoute.route('/getBirth-Select').get((req, res) => {
 
 // Update employee
 staffRoute.route('/update-employee/:id').put((req, res, next) => {
+  req.body.dateWithOutYear = moment(req.body.date).format('MM-DD');
   Employee.findByIdAndUpdate(req.params.id, {
     $set: req.body
   }, (error, data) => {
@@ -134,7 +135,9 @@ staffRoute.route('/update-employee/:id').put((req, res, next) => {
       return next(error);
     } else {
       res.json(data)
+      console.log(data);
       console.log('employer updated successfully!')
+
     }
   })
 })

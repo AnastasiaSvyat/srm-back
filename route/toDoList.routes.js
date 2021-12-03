@@ -37,7 +37,6 @@ toDoListRoute.route('/get-taskWeek').get((req, res) => {
 
 toDoListRoute.route('/get-taskTomorrow').get((req, res) => {
   const idEmployee = req.query.idEmployee
-
   var condition = idEmployee ? { idEmployee: idEmployee, date: { $eq: tomorrow } } : {};
   ToDoList.find(condition)
     .then(data => {
@@ -51,10 +50,12 @@ toDoListRoute.route('/get-taskTomorrow').get((req, res) => {
 
 toDoListRoute.route('/get-taskDate').get((req, res) => {
   const idEmployee = req.query.idEmployee
+  console.log(today);
   var condition = idEmployee ? { idEmployee: idEmployee, date: { $eq: today } } : {};
   ToDoList.find(condition)
     .then(data => {
       res.send(data);
+      console.log(data);
     })
     .catch(err => {
       res.status(500).send({
@@ -76,6 +77,7 @@ toDoListRoute.route('/read-task/:id').get((req, res) => {
 
 // Update Event
 toDoListRoute.route('/update-task/:id').put((req, res, next) => {
+  req.body.date = moment(req.body.date).format('YYYY-MM-DD');
   ToDoList.findByIdAndUpdate(req.params.id, {
     $set: req.body
   }, (error, data) => {
@@ -83,6 +85,7 @@ toDoListRoute.route('/update-task/:id').put((req, res, next) => {
       return next(error);
     } else {
       res.json(data)
+      console.log(data);
       console.log('event updated successfully!')
     }
   })
