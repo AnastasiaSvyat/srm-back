@@ -32,11 +32,9 @@ eventRoute.route('/getEvent-Later').get((req, res, next) => {
 
 // todayEvents
 eventRoute.route('/getEvent-today').get((req, res) => {
-  console.log(today);
   Events.find({ date: { $eq: today } })
     .then(data => {
       res.send(data);
-      console.log('l',data);
     })
     .catch(err => {
       res.status(500).send({
@@ -46,7 +44,6 @@ eventRoute.route('/getEvent-today').get((req, res) => {
 
 // eventSelect
 eventRoute.route('/getEvent-Select').get((req, res) => {
-  console.log(req.query.date);
   Events.find({ date: { $eq: req.query.date } })
     .then(data => {
       res.send(data);
@@ -78,7 +75,6 @@ eventRoute.route('/update-event/:id').put((req, res, next) => {
       return next(error);
     } else {
       res.json(data)
-      console.log('event updated successfully!')
     }
   })
 })

@@ -6,19 +6,19 @@ const Employee = new mongoose.Schema({
   name: {
     type: String
   },
-  position:{
+  position: {
     type: String
   },
-  date:{
+  date: {
     type: String
   },
-  dateWithOutYear:{
+  dateWithOutYear: {
     type: String
   },
-  salary:{
+  salary: {
     type: Number
   },
-  phone:{
+  phone: {
     type: Number
   },
   email: {
@@ -36,21 +36,24 @@ const Employee = new mongoose.Schema({
   role: {
     type: String
   },
+  skype: {
+    type: String
+  },
   info: {
-    type:Array
+    type: Array
   },
-  toDoList: {
-    type:Array
+  infoUser: {
+    type:String
   },
-  file: {
-    type:Array
-  },
+  lastPerf: {
+    type: String
+  }
 }, {
   collection: 'employee'
 
 });
 
-Employee.method("toJSON", function() {
+Employee.method("toJSON", function () {
   const { __v, _id, ...object } = this.toObject();
   object.id = _id;
   return object;

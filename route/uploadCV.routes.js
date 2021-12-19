@@ -35,10 +35,9 @@ CVFileRoute.route('/uplFile', upload.single('file')).post((req, res, next) => {
     idEmployee
   });
   var condition = idEmployee ? { idEmployee: req.body.idEmployee } : {};
-  CVFile.find(condition)
+  CVFile.findOneAndDelete(condition)
     .then(data => {
-      if (data.length) {
-        CVFile.findByIdAndRemove(data[0]._id, () => {
+      if (data) {
           CVFile.create(dataCv, (error, data) => {
             if (error) {
               return next(error)
@@ -46,7 +45,6 @@ CVFileRoute.route('/uplFile', upload.single('file')).post((req, res, next) => {
               res.json(data)
             }
           })
-        })
       } else {
         CVFile.create(dataCv, (error, data) => {
           if (error) {
@@ -62,7 +60,7 @@ CVFileRoute.route('/uplFile', upload.single('file')).post((req, res, next) => {
 CVFileRoute.route('/getCVFileById').get((req, res) => {
   const idEmployee = req.query.idEmployee
   var condition = idEmployee ? { idEmployee: idEmployee } : {};
-  CVFile.find(condition)
+  CVFile.findOne(condition)
     .then(data => {
       res.send(data);
     })

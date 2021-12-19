@@ -35,10 +35,9 @@ uploadPhotoRoute.route('/uploadPhoto', upload.single('file')).post((req, res, ne
     imagePath,
     idEmployee
   });
-  UploadPhoto.find({ idEmployee: req.body.idEmployee })
+  UploadPhoto.findOneAndDelete({ idEmployee: req.body.idEmployee })
     .then(data => {
-      if (data.length) {
-        UploadPhoto.findByIdAndRemove(data[0]._id, () => { })
+      if (data) {
         UploadPhoto.create(dataPhoto, (error, data) => {
           if (error) {
             return next(error)
@@ -62,7 +61,7 @@ uploadPhotoRoute.route('/uploadPhoto', upload.single('file')).post((req, res, ne
 uploadPhotoRoute.route('/getPhotoEmployeeById').get((req, res) => {
   const idEmployee = req.query.idEmployee
   var condition = idEmployee ? { idEmployee: idEmployee } : {};
-  UploadPhoto.find(condition)
+  UploadPhoto.findOne(condition)
     .then(data => {
       res.send(data);
     })

@@ -31,8 +31,10 @@ loginRoute.post('/login', async (req, res) => {
           salary: user.salary,
           password: user.password,
           info: user.info,
-          file: user.file,
-          toDoList: user.toDoList
+          infoUser: user.infoUser,
+          lastPerf:user.lastPerf,
+          skype:user.skype
+
         })
       } else {
         res.status(401).json({

@@ -14,7 +14,6 @@ toDoListRoute.route('/add-task').post((req, res, next) => {
       return next(error)
     } else {
       res.json(data)
-      console.log(data);
     }
   })
 });
@@ -23,7 +22,6 @@ toDoListRoute.route('/add-task').post((req, res, next) => {
 // Get all Events
 toDoListRoute.route('/get-taskWeek').get((req, res) => {
   const idEmployee = req.query.idEmployee
-
   var condition = idEmployee ? { idEmployee: idEmployee, date: { $gt: tomorrow, $lte: week } } : {};
   ToDoList.find(condition)
     .then(data => {
@@ -50,12 +48,10 @@ toDoListRoute.route('/get-taskTomorrow').get((req, res) => {
 
 toDoListRoute.route('/get-taskDate').get((req, res) => {
   const idEmployee = req.query.idEmployee
-  console.log(today);
   var condition = idEmployee ? { idEmployee: idEmployee, date: { $eq: today } } : {};
   ToDoList.find(condition)
     .then(data => {
       res.send(data);
-      console.log(data);
     })
     .catch(err => {
       res.status(500).send({
@@ -85,8 +81,6 @@ toDoListRoute.route('/update-task/:id').put((req, res, next) => {
       return next(error);
     } else {
       res.json(data)
-      console.log(data);
-      console.log('event updated successfully!')
     }
   })
 })

@@ -8,6 +8,8 @@ let Request = require('../model/Request');
 // Add Request
 requestRoute.route('/add-request').post((req, res, next) => {
   req.body.date = moment(req.body.date).format('YYYY-MM-DD');
+  req.body.month = moment(req.body.date).format('MM');
+
   Request.create(req.body, (error, data) => {
     if (error) {
       return next(error)

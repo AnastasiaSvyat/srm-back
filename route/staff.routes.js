@@ -31,6 +31,7 @@ staffRoute.post('/add-employee', async (req, res) => {
   const candidate = await Employee.findOne({ email: req.body.email })
   var date = moment(req.body.date).format('YYYY-MM-DD');
   var dateWithOutYear = moment(req.body.date).format('MM-DD');
+  try {
   if (candidate) {
     res.status(409).json({
       massage: "This email is already taken. Try another."
@@ -48,20 +49,22 @@ staffRoute.post('/add-employee', async (req, res) => {
       role: req.body.role,
       salary: req.body.salary,
       info: req.body.info,
+      infoUser: req.body.infoUser,
+      skype: req.body.skype,
       file: req.body.file,
       toDoList: req.body.toDoList,
       dateWithOutYear: dateWithOutYear,
       id: req.body._id,
       password: bcrypt.hashSync(password, salt)
     })
-    try {
-      await user.save()
-      res.status(201).json(user)
-    } catch (e) {
-      errorHandler(res, e)
-    }
+    user.save()
+    res.status(201).json(user)
+  }
+    } catch (error) {
+      return res.send(error);
   }
 })
+
 staffRoute.route('/birthday-employee').get((req, res) => {
   Employee.find((error, data) => {
     if (error) {
@@ -113,7 +116,6 @@ staffRoute.route('/read-employee/:id').get((req, res) => {
 
 // Birth select date
 staffRoute.route('/getBirth-Select').get((req, res) => {
-  console.log(req.query);
   Employee.find({ dateWithOutYear: { $eq: req.query.date } })
     .then(data => {
       res.send(data);
@@ -135,8 +137,6 @@ staffRoute.route('/update-employee/:id').put((req, res, next) => {
       return next(error);
     } else {
       res.json(data)
-      console.log(data);
-      console.log('employer updated successfully!')
 
     }
   })
