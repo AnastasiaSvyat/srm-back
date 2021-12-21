@@ -68,7 +68,7 @@ eventRoute.route('/getEvent-month').get((req, res) => {
 
 // Update Event
 eventRoute.route('/update-event/:id').put((req, res, next) => {
-  EveEventsnt.findByIdAndUpdate(req.params.id, {
+  Events.findByIdAndUpdate(req.params.id, {
     $set: req.body
   }, (error, data) => {
     if (error) {
