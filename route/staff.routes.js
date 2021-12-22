@@ -128,18 +128,43 @@ staffRoute.route('/getBirth-Select').get((req, res) => {
 
 
 // Update employee
-staffRoute.route('/update-employee/:id').put((req, res, next) => {
+staffRoute.put('/update-employee/:id', async (req, res, next) => {
+  const candidate = await Employee.findOne({ email: req.body.email })
+  const candidateId = await Employee.findOne({ email: req.body.email, _id: req.body.id })
   req.body.dateWithOutYear = moment(req.body.date).format('MM-DD');
-  Employee.findByIdAndUpdate(req.params.id, {
-    $set: req.body
-  }, (error, data) => {
-    if (error) {
-      return next(error);
-    } else {
-      res.json(data)
-
-    }
-  })
+  console.log(candidate);
+  console.log(candidateId);
+  try {
+  if (candidateId) {
+    Employee.findByIdAndUpdate(req.params.id, {
+      $set: req.body
+    }, (error, data) => {
+      if (error) {
+        return res.send(error);
+      } else {
+        res.json(data)
+  
+      }
+    })
+  }else if (candidate) {
+    res.status(409).json({
+      massage: "This email is already taken. Try another."
+    })
+  } else {
+    Employee.findByIdAndUpdate(req.params.id, {
+      $set: req.body
+    }, (error, data) => {
+      if (error) {
+        return res.send(error);
+      } else {
+        res.json(data)
+  
+      }
+    })
+  }
+    } catch (error) {
+      return res.send(error);
+  }
 })
 
 staffRoute.route('/getEmpl-Today').get((req, res) => {
