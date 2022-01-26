@@ -18,6 +18,29 @@ eventRoute.route('/add-event').post((req, res, next) => {
   })
 });
 
+// ALL Events
+eventRoute.route('/events').get((req, res) => {
+  Events.find()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+      });
+    });
+})
+
+//Event Id
+eventRoute.route('/event/:id').get((req, res) => {
+  Events.findById(req.params.id, (error, data) => {
+    if (error) {
+      return next(error)
+    } else {
+      res.json(data)
+    }
+  })
+})
+
 // Get Later Events
 eventRoute.route('/getEvent-Later').get((req, res, next) => {
   Events.find({ date: { $gt: month } }).sort({ date: 1 })
@@ -78,6 +101,7 @@ eventRoute.route('/update-event/:id').put((req, res, next) => {
     }
   })
 })
+
 
 // Delete Event
 eventRoute.route('/delete-event/:id').delete((req, res, next) => {

@@ -13,7 +13,13 @@ let Events = new Schema({
   },
   description: {
     type: String
-  }
+  },
+  confirm:{
+    type: Array
+  },
+  decline:{
+    type: Array
+  },
 }, {
   collection: 'events'
 })
