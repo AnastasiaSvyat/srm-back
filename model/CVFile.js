@@ -11,6 +11,7 @@ let CVFile = new Schema({
   idEmployee:{
     type: String
   },
+
 }, {
   collection: 'CVFile'
 })

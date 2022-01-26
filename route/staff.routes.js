@@ -5,6 +5,8 @@ const errorHandler = require("../utills/errorHandler")
 var moment = require('moment')
 var today = moment().format('MM-DD');
 var month = moment().format('MM-31');
+var now = new Date();
+var mon = now.getMonth() + 1;
 
 let Employee = require('../model/Employee');
 
@@ -44,7 +46,6 @@ staffRoute.post('/add-employee', async (req, res) => {
       date: date,
       name: req.body.name,
       email: req.body.email,
-      salary: req.body.salary,
       phone: req.body.phone,
       role: req.body.role,
       salary: req.body.salary,
@@ -63,6 +64,20 @@ staffRoute.post('/add-employee', async (req, res) => {
     } catch (error) {
       return res.send(error);
   }
+})
+
+staffRoute.route('/update-password/:id').put((req, res, next) => {
+  const salt = bcrypt.genSaltSync(10)
+  req.body.password = bcrypt.hashSync(req.body.password, salt);
+  Employee.findByIdAndUpdate(req.params.id, {
+    $set: req.body
+  }, (error, data) => {
+    if (error) {
+      return next(error);
+    } else {
+      res.json(data)
+    }
+  })
 })
 
 staffRoute.route('/birthday-employee').get((req, res) => {
@@ -132,8 +147,6 @@ staffRoute.put('/update-employee/:id', async (req, res, next) => {
   const candidate = await Employee.findOne({ email: req.body.email })
   const candidateId = await Employee.findOne({ email: req.body.email, _id: req.body.id })
   req.body.dateWithOutYear = moment(req.body.date).format('MM-DD');
-  console.log(candidate);
-  console.log(candidateId);
   try {
   if (candidateId) {
     Employee.findByIdAndUpdate(req.params.id, {
@@ -179,7 +192,7 @@ staffRoute.route('/getEmpl-Today').get((req, res) => {
 })
 
 staffRoute.route('/getEmpl-Later').get((req, res) => {
-  Employee.find({ dateWithOutYear: { $gt: month } })
+  Employee.find({ dateWithOutYear: {$gt: month } }).sort({ date: 1 })
     .then(data => {
       res.send(data);
     })
@@ -190,8 +203,9 @@ staffRoute.route('/getEmpl-Later').get((req, res) => {
 })
 
 staffRoute.route('/getEmpl-Month').get((req, res) => {
-  Employee.find({ dateWithOutYear: { $gt: today, $lte: month } })
+  Employee.find({ dateWithOutYear: { $gt: today, $lte: month } }).sort({ date: 1 })
     .then(data => {
+      console.log(data);
       res.send(data);
     })
     .catch(err => {
