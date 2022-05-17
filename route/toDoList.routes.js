@@ -9,7 +9,6 @@ let ToDoList = require('../model/ToDoList');
 // Add Event
 toDoListRoute.route('/add-task').post((req, res, next) => {
   req.body.date = moment(req.body.date).format('YYYY-MM-DD');
-  console.log(req.body.date);
   ToDoList.create(req.body, (error, data) => {
     if (error) {
       return next(error)

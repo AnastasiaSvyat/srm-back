@@ -38,13 +38,13 @@ CVFileRoute.route('/uplFile', upload.single('file')).post((req, res, next) => {
   CVFile.findOneAndDelete(condition)
     .then(data => {
       if (data) {
-          CVFile.create(dataCv, (error, data) => {
-            if (error) {
-              return next(error)
-            } else {
-              res.json(data)
-            }
-          })
+        CVFile.create(dataCv, (error, data) => {
+          if (error) {
+            return next(error)
+          } else {
+            res.json(data)
+          }
+        })
       } else {
         CVFile.create(dataCv, (error, data) => {
           if (error) {

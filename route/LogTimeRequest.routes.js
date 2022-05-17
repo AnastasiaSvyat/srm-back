@@ -11,7 +11,6 @@ LogTimeVacationRoute.route('/createLogTimeVacation').post((req, res, next) => {
 
   req.body.counterUpdateDate = moment(req.body.date).format(year + '-MM-DD');
 
-  console.log(req.body.counterUpdateDate);
   LogTimeVacation.create(req.body, (error, data) => {
     if (error) {
       return next(error)
@@ -109,7 +108,6 @@ LogTimeVacationRoute.route('/updateDateVacation/:id').put((req, res, next) => {
 
 LogTimeVacationRoute.route('/currentRequestByEmployeeId').put((req, res, next) => {
   var today = moment().format('yyyy-MM-DD');
-  console.log(req.body);
   const reqFilter = {
     idEmployee: req.query.idEmployee,
   }
@@ -117,7 +115,7 @@ LogTimeVacationRoute.route('/currentRequestByEmployeeId').put((req, res, next) =
   var employee = reqFilter ? { idEmployee: reqFilter.idEmployee } : {};
 
   LogTimeVacation.findOneAndUpdate(condition, {
-    $inc: { vacation:req.body.vacation, sickLeave: req.body.sickLeave }
+    $inc: { vacation: req.body.vacation, sickLeave: req.body.sickLeave }
   }, (error, data) => {
     if (error) {
       return next(error);
@@ -149,7 +147,6 @@ LogTimeVacationRoute.route('/currentRequestByEmployeeId').put((req, res, next) =
 
 
 LogTimeVacationRoute.route('/declineCurrentRequestByEmployeeId').put((req, res, next) => {
-  console.log(req.body);
   const reqFilter = {
     idEmployee: req.query.idEmployee,
   }

@@ -32,8 +32,8 @@ loginRoute.post('/login', async (req, res) => {
           password: user.password,
           info: user.info,
           infoUser: user.infoUser,
-          lastPerf:user.lastPerf,
-          skype:user.skype,
+          lastPerf: user.lastPerf,
+          skype: user.skype,
           lastName: user.lastName,
           startDate: user.startDate
         })

@@ -49,17 +49,17 @@ countReqRoute.post('/countRequest', async (req, res, next) => {
 
 countReqRoute.route('/get-monthRequest').get((req, res) => {
     const reqFilter = {
-      month: req.query.month,
+        month: req.query.month,
     }
     var condition = reqFilter ? { month: reqFilter.month } : {};
     CountRequest.find(condition)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+            });
         });
-      });
-  })
+})
 
 module.exports = countReqRoute;

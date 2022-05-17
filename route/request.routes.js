@@ -194,7 +194,7 @@ requestRoute.route('/trueRequest-monthbyId').get((req, res) => {
   }
   var today = moment().format('YYYY-MM-DD');
   var month = moment().format('YYYY-MM-31');
-  var condition = reqFilter ? { idEmployee: reqFilter.idEmployee ,confirm: reqFilter.confirm, date: { $gte: today, $lte: month },  } : {};
+  var condition = reqFilter ? { idEmployee: reqFilter.idEmployee, confirm: reqFilter.confirm, date: { $gte: today, $lte: month }, } : {};
   Request.find(condition).sort({ date: 1 })
     .then(data => {
       res.send(data);
@@ -229,7 +229,6 @@ requestRoute.route('/update-request/:id').put((req, res, next) => {
       return next(error);
     } else {
       res.json(data)
-      console.log('event updated successfully!')
     }
   })
 })
