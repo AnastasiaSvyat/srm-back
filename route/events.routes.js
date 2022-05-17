@@ -43,6 +43,7 @@ eventRoute.route('/event/:id').get((req, res) => {
 
 // Get Later Events
 eventRoute.route('/getEvent-Later').get((req, res, next) => {
+  var month = moment().format('YYYY-MM-31');
   Events.find({ date: { $gt: month } }).sort({ date: 1 })
     .then(data => {
       res.send(data);
@@ -55,6 +56,7 @@ eventRoute.route('/getEvent-Later').get((req, res, next) => {
 
 // todayEvents
 eventRoute.route('/getEvent-today').get((req, res) => {
+var today = moment().format('YYYY-MM-DD');
   Events.find({ date: { $eq: today } })
     .then(data => {
       res.send(data);
@@ -79,6 +81,8 @@ eventRoute.route('/getEvent-Select').get((req, res) => {
 
 // monthEvents
 eventRoute.route('/getEvent-month').get((req, res) => {
+var today = moment().format('YYYY-MM-DD');
+var month = moment().format('YYYY-MM-31');
   Events.find({ date: { $gt: today, $lte: month } }).sort({ date: 1 })
     .then(data => {
       res.send(data);

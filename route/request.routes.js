@@ -9,13 +9,13 @@ let Request = require('../model/Request');
 requestRoute.route('/add-request').post((req, res, next) => {
   req.body.date = moment(req.body.date).format('YYYY-MM-DD');
   req.body.month = moment(req.body.date).format('MM');
+  req.body.endMonth = moment(req.body.endDate).format('MM');
 
   Request.create(req.body, (error, data) => {
     if (error) {
       return next(error)
     } else {
       res.json(data)
-      console.log(data);
     }
   })
 });
@@ -102,6 +102,7 @@ requestRoute.route('/false-reqById').get((req, res) => {
 // confirm request
 requestRoute.route('/true-request').get((req, res) => {
   const confirm = req.query.confirm
+  var today = moment().format('YYYY-MM-DD');
   var condition = confirm ? { confirm: confirm, date: { $gte: today } } : {};
   Request.find(condition)
     .then(data => {
@@ -113,11 +114,31 @@ requestRoute.route('/true-request').get((req, res) => {
     });
 });
 
+requestRoute.route('/true-request-vacation').get((req, res) => {
+  const reqFilter = {
+    confirm: req.query.confirm,
+    type: req.query.type
+  }
+  var today = moment().format('YYYY-MM-DD');
+  var condition = reqFilter ? { confirm: reqFilter.confirm, date: { $gte: today }, type: reqFilter.type, } : {};
+  Request.find(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+      });
+    });
+});
+
+
 // confirm request month
 requestRoute.route('/trueRequest-month').get((req, res) => {
   const reqFilter = {
     confirm: req.query.confirm,
   }
+  var month = moment().format('YYYY-MM-31');
+  var today = moment().format('YYYY-MM-DD');
   var condition = reqFilter ? { confirm: reqFilter.confirm, date: { $gte: today, $lte: month } } : {};
   Request.find(condition).sort({ date: 1 })
     .then(data => {
@@ -134,6 +155,7 @@ requestRoute.route('/trueRequest-Later').get((req, res) => {
   const reqFilter = {
     confirm: req.query.confirm,
   }
+  var month = moment().format('YYYY-MM-31');
   var condition = reqFilter ? { confirm: reqFilter.confirm, date: { $gt: month } } : {};
   Request.find(condition).sort({ date: 1 })
     .then(data => {
@@ -146,12 +168,14 @@ requestRoute.route('/trueRequest-Later').get((req, res) => {
 });
 
 
+
 // confirmrequestLaterSelectEmployee
 requestRoute.route('/trueRequestEmployee-Later').get((req, res) => {
   const reqFilter = {
     confirm: req.query.confirm,
     idEmployee: req.query.idEmployee
   }
+  var today = moment().format('YYYY-MM-DD');
   var condition = reqFilter ? { idEmployee: reqFilter.idEmployee, confirm: reqFilter.confirm, date: { $gte: today } } : {};
   Request.find(condition).sort({ date: 1 })
     .then(data => {
@@ -163,6 +187,23 @@ requestRoute.route('/trueRequestEmployee-Later').get((req, res) => {
     });
 });
 
+requestRoute.route('/trueRequest-monthbyId').get((req, res) => {
+  const reqFilter = {
+    confirm: req.query.confirm,
+    idEmployee: req.query.idEmployee
+  }
+  var today = moment().format('YYYY-MM-DD');
+  var month = moment().format('YYYY-MM-31');
+  var condition = reqFilter ? { idEmployee: reqFilter.idEmployee ,confirm: reqFilter.confirm, date: { $gte: today, $lte: month },  } : {};
+  Request.find(condition).sort({ date: 1 })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+      });
+    });
+});
 
 // decline request
 requestRoute.route('/false-request').get((req, res) => {

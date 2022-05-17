@@ -9,6 +9,7 @@ let ToDoList = require('../model/ToDoList');
 // Add Event
 toDoListRoute.route('/add-task').post((req, res, next) => {
   req.body.date = moment(req.body.date).format('YYYY-MM-DD');
+  console.log(req.body.date);
   ToDoList.create(req.body, (error, data) => {
     if (error) {
       return next(error)
@@ -22,6 +23,8 @@ toDoListRoute.route('/add-task').post((req, res, next) => {
 // Get all Events
 toDoListRoute.route('/get-taskWeek').get((req, res) => {
   const idEmployee = req.query.idEmployee
+  var tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
+  var week = moment().add(7, 'days').format('YYYY-MM-DD');
   var condition = idEmployee ? { idEmployee: idEmployee, date: { $gt: tomorrow, $lte: week } } : {};
   ToDoList.find(condition)
     .then(data => {
@@ -35,6 +38,7 @@ toDoListRoute.route('/get-taskWeek').get((req, res) => {
 
 toDoListRoute.route('/get-taskTomorrow').get((req, res) => {
   const idEmployee = req.query.idEmployee
+  var tomorrow = moment().add(1, 'days').format('YYYY-MM-DD');
   var condition = idEmployee ? { idEmployee: idEmployee, date: { $eq: tomorrow } } : {};
   ToDoList.find(condition)
     .then(data => {
@@ -48,6 +52,7 @@ toDoListRoute.route('/get-taskTomorrow').get((req, res) => {
 
 toDoListRoute.route('/get-taskDate').get((req, res) => {
   const idEmployee = req.query.idEmployee
+  var today = moment().format('YYYY-MM-DD');
   var condition = idEmployee ? { idEmployee: idEmployee, date: { $eq: today } } : {};
   ToDoList.find(condition)
     .then(data => {

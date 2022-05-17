@@ -45,6 +45,7 @@ staffRoute.post('/add-employee', async (req, res) => {
       position: req.body.position,
       date: date,
       name: req.body.name,
+      lastName: req.body.lastName,
       email: req.body.email,
       phone: req.body.phone,
       role: req.body.role,
@@ -52,8 +53,8 @@ staffRoute.post('/add-employee', async (req, res) => {
       info: req.body.info,
       infoUser: req.body.infoUser,
       skype: req.body.skype,
-      file: req.body.file,
-      toDoList: req.body.toDoList,
+      // file: req.body.file,
+      startDate: req.body.startDate,
       dateWithOutYear: dateWithOutYear,
       id: req.body._id,
       password: bcrypt.hashSync(password, salt)
@@ -181,6 +182,8 @@ staffRoute.put('/update-employee/:id', async (req, res, next) => {
 })
 
 staffRoute.route('/getEmpl-Today').get((req, res) => {
+  var today = moment().format('MM-DD');
+  console.log(today);
   Employee.find({ dateWithOutYear: { $eq: today } })
     .then(data => {
       res.send(data);
@@ -191,8 +194,10 @@ staffRoute.route('/getEmpl-Today').get((req, res) => {
     });
 })
 
-staffRoute.route('/getEmpl-Later').get((req, res) => {
-  Employee.find({ dateWithOutYear: {$gt: month } }).sort({ date: 1 })
+staffRoute.route('/getEmpl-LaterStart').get((req, res) => {
+var monthEnd = moment().format('MM-31');
+
+  Employee.find({ dateWithOutYear: {$gt: monthEnd } }).sort({ dateWithOutYear: 1 })
     .then(data => {
       res.send(data);
     })
@@ -202,10 +207,26 @@ staffRoute.route('/getEmpl-Later').get((req, res) => {
     });
 })
 
+staffRoute.route('/getEmpl-LaterEnd').get((req, res) => {
+  var monthStart = moment().format('MM-01');
+  
+  
+    Employee.find({ dateWithOutYear: {$lt: monthStart } }).sort({ dateWithOutYear: 1 })
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+        });
+      });
+  })
+
 staffRoute.route('/getEmpl-Month').get((req, res) => {
+  var today = moment().format('MM-01');
+  var month = moment().format('MM-31');
+  
   Employee.find({ dateWithOutYear: { $gt: today, $lte: month } }).sort({ date: 1 })
     .then(data => {
-      console.log(data);
       res.send(data);
     })
     .catch(err => {

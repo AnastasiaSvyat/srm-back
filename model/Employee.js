@@ -6,6 +6,9 @@ const Employee = new mongoose.Schema({
   name: {
     type: String
   },
+  lastName: {
+    type: String
+  },
   position: {
     type: String
   },
@@ -13,6 +16,9 @@ const Employee = new mongoose.Schema({
     type: String
   },
   dateWithOutYear: {
+    type: String
+  },
+  startDate: {
     type: String
   },
   salary: {

@@ -33,8 +33,9 @@ loginRoute.post('/login', async (req, res) => {
           info: user.info,
           infoUser: user.infoUser,
           lastPerf:user.lastPerf,
-          skype:user.skype
-
+          skype:user.skype,
+          lastName: user.lastName,
+          startDate: user.startDate
         })
       } else {
         res.status(401).json({

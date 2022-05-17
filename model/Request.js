@@ -14,6 +14,9 @@ let Request = new Schema({
   month:{
     type: String
   }, 
+  endMonth:{
+    type: String
+  },
   endDate: {
     type: String
   },

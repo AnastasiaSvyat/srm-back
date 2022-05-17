@@ -6,6 +6,8 @@ let express = require('express'),
   mongoDb = require('./database/db');
 const fileUpload = require('express-fileupload');
 const mongoosePaginate = require('mongoose-paginate-v2');
+const createError = require('http-errors');
+
 
 
 mongoose.Promise = global.Promise;
@@ -25,8 +27,12 @@ const eventRoute = require('./route/events.routes')
 const authRoute = require('./route/auth.routes')
 const uploadCVRoute = require('./route/uploadCV.routes')
 const uploadPhotoRoute = require('./route/uploadPhoto.routes')
+const countReqRoute = require('./route/countReq.routes')
 const requestRoute = require('./route/request.routes')
 const toDoListRoute = require('./route/toDoList.routes')
+const logTimeRoute = require('./route/logTime.routes')
+const standartMonthHoursRoute = require('./route/standartMonthHours.routes')
+const logTimeRequestRoute = require('./route/LogTimeRequest.routes')
 
 
 const app = express();
@@ -50,6 +56,10 @@ app.use('/api', uploadCVRoute)
 app.use('/api', requestRoute)
 app.use('/api', toDoListRoute)
 app.use('/api', uploadPhotoRoute)
+app.use('/api', countReqRoute)
+app.use('/api', logTimeRoute)
+app.use('/api', standartMonthHoursRoute)
+app.use('/api', logTimeRequestRoute)
 
 
 
