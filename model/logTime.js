@@ -9,12 +9,16 @@ let LogTime = new Schema({
   month:{
     type: Number
   },
+  sumHours:{
+    type: Number
+  },
   monthString:{
     type: String
   },
-  time:{
-    type: Number
+  timeInProject:{
+    type: Array
   },
+
 }, {
   collection: 'logTime'
 })

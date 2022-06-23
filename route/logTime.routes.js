@@ -13,10 +13,12 @@ logTimeRoute.route('/logTimeEmployee').get((req, res) => {
 })
 
 logTimeRoute.route('/logTime').post((req, res, next) => {
+  console.log(res);
   LogTime.create(req.body, (error, data) => {
     if (error) {
       return next(error)
     } else {
+      console.log(data);
       res.json(data)
     }
   })
