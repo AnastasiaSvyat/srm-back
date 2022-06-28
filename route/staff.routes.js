@@ -31,8 +31,12 @@ staffRoute.route('/').get((req, res) => {
 // Add employee
 staffRoute.post('/add-employee', async (req, res) => {
   const candidate = await Employee.findOne({ email: req.body.email })
-  var date = moment(req.body.date).format('YYYY-MM-DD');
-  var dateWithOutYear = moment(req.body.date).format('MM-DD');
+  console.log(req.body.date);
+  if(req.body.date){
+    var date = moment(req.body.date).format('YYYY-MM-DD');
+    var dateWithOutYear = moment(req.body.date).format('MM-DD');
+  }
+  
   try {
     if (candidate) {
       res.status(409).json({
@@ -43,7 +47,7 @@ staffRoute.post('/add-employee', async (req, res) => {
       const password = req.body.password
       const user = new Employee({
         position: req.body.position,
-        date: date,
+        date: date || req.body.date,
         name: req.body.name,
         lastName: req.body.lastName,
         email: req.body.email,
@@ -55,7 +59,7 @@ staffRoute.post('/add-employee', async (req, res) => {
         skype: req.body.skype,
         // file: req.body.file,
         startDate: req.body.startDate,
-        dateWithOutYear: dateWithOutYear,
+        dateWithOutYear: dateWithOutYear || req.body.date,
         id: req.body._id,
         password: bcrypt.hashSync(password, salt)
       })
@@ -91,6 +95,18 @@ staffRoute.route('/birthday-employee').get((req, res) => {
       })
     }
   })
+})
+
+
+staffRoute.route('/getStaffList').get((req, res) => {
+  Employee.find()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+      });
+    });
 })
 
 // Get all Staff Pagination 
