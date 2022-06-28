@@ -64,9 +64,10 @@ amountConfirmedRequestMonthRoute.route('/amountConfirmedRequestMonth').post((req
 
 amountConfirmedRequestMonthRoute.route('/getRequestCurrentUser').get((req, res) => {
 
-    req.query.date = moment(req.query.date).format('MM-YYYY');
+    // constdate = moment(req.query.date).format('MM-YYYY');
+    // console.log(req.query.date);
 
-    AmountConfirmedRequestMonth.find({ 
+    AmountConfirmedRequestMonth.findOne({ 
         idEmployee: req.query.idEmployee,
         date: req.query.date
      })
