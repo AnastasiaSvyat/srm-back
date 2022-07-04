@@ -18,13 +18,22 @@ const getPagination = (page, size) => {
 
 // Get all Staff
 staffRoute.route('/').get((req, res) => {
-  Employee.find((error, data) => {
-    if (error) {
-      return next(error)
-    } else {
-      res.json(data)
-    }
-  })
+  // Employee.find().sort({ lastName: 1 },(error, data) => {
+  //   if (error) {
+  //     return next(error)
+  //   } else {
+  //     res.json(data)
+  //   }
+  // })
+
+  Employee.find().sort({ lastName: 1 })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+      });
+    });
 })
 
 
@@ -99,7 +108,7 @@ staffRoute.route('/birthday-employee').get((req, res) => {
 
 
 staffRoute.route('/getStaffList').get((req, res) => {
-  Employee.find()
+  Employee.find().sort({ lastName: 1 }).collation({ locale: "en", caseLevel: true })
     .then(data => {
       res.send(data);
     })
