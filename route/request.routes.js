@@ -102,9 +102,9 @@ requestRoute.route('/false-reqById').get((req, res) => {
 // confirm request
 requestRoute.route('/true-request').get((req, res) => {
   const confirm = req.query.confirm
-  var today = moment().format('YYYY-MM-DD');
+  var today = moment().format('YYYY-01-01');
   var condition = confirm ? { confirm: confirm, date: { $gte: today } } : {};
-  Request.find(condition)
+  Request.find(condition).sort({ date: -1 })
     .then(data => {
       res.send(data);
     })
@@ -208,8 +208,9 @@ requestRoute.route('/trueRequest-monthbyId').get((req, res) => {
 // decline request
 requestRoute.route('/false-request').get((req, res) => {
   const decline = req.query.decline
-  var condition = decline ? { decline: decline } : {};
-  Request.find(condition)
+  var today = moment().format('YYYY-01-01');
+  var condition = decline ? { decline: decline , date: { $gte: today }} : {};
+  Request.find(condition).sort({ date: -1 })
     .then(data => {
       res.send(data);
     })

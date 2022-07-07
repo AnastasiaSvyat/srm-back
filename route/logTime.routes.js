@@ -61,4 +61,21 @@ logTimeRoute.route('/getLogTimeCurrentMonth').get((req, res) => {
     });
 });
 
+logTimeRoute.route('/getLogTimeSelectEmployeeCurrentMonth').get((req, res) => {
+  const reqFilter = {
+    monthString: req.query.monthString,
+    idEmployee: req.query.idEmployee
+  }
+  var condition = reqFilter ? { monthString: reqFilter.monthString,  idEmployee: reqFilter.idEmployee, } : {};
+  
+  LogTime.findOne(condition)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+      });
+    });
+});
+
 module.exports = logTimeRoute;
