@@ -1,13 +1,14 @@
 const express = require('express');
 const requestRoute = express.Router();
 var moment = require('moment')
+
 var today = moment().format('YYYY-MM-DD');
 var month = moment().format('YYYY-MM-31');
 let Request = require('../model/Request');
 
 // Add Request
 requestRoute.route('/add-request').post((req, res, next) => {
-  req.body.date = moment(req.body.date).format('YYYY-MM-DD');
+
   req.body.month = moment(req.body.date).format('MM');
   req.body.endMonth = moment(req.body.endDate).format('MM');
 

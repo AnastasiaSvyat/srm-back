@@ -18,7 +18,6 @@ logTimeRoute.route('/logTime').post((req, res, next) => {
     if (error) {
       return next(error)
     } else {
-      console.log(data);
       res.json(data)
     }
   })
@@ -49,8 +48,8 @@ logTimeRoute.route('/update-logTime/:id').put((req, res, next) => {
 })
 
 logTimeRoute.route('/getLogTimeCurrentMonth').get((req, res) => {
-  const monthString = req.query.monthString
-  var condition = monthString ? { monthString: monthString } : {};
+  const selectMonthAndYear = req.query.selectMonthAndYear
+  var condition = selectMonthAndYear ? { selectMonthAndYear: selectMonthAndYear } : {};
   LogTime.find(condition)
     .then(data => {
       res.send(data);
@@ -63,10 +62,10 @@ logTimeRoute.route('/getLogTimeCurrentMonth').get((req, res) => {
 
 logTimeRoute.route('/getLogTimeSelectEmployeeCurrentMonth').get((req, res) => {
   const reqFilter = {
-    monthString: req.query.monthString,
+    selectMonthAndYear: req.query.selectMonthAndYear,
     idEmployee: req.query.idEmployee
   }
-  var condition = reqFilter ? { monthString: reqFilter.monthString,  idEmployee: reqFilter.idEmployee, } : {};
+  var condition = reqFilter ? { selectMonthAndYear: reqFilter.selectMonthAndYear,  idEmployee: reqFilter.idEmployee, } : {};
   
   LogTime.findOne(condition)
     .then(data => {

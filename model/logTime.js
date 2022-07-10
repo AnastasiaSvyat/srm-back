@@ -12,7 +12,7 @@ let LogTime = new Schema({
   sumHours:{
     type: Number
   },
-  monthString:{
+  selectMonthAndYear:{
     type: String
   },
   timeInProject:{
