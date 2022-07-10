@@ -249,7 +249,7 @@ staffRoute.route('/getEmpl-Month').get((req, res) => {
   var today = moment().format('MM-01');
   var month = moment().format('MM-31');
 
-  Employee.find({ dateWithOutYear: { $gt: today, $lte: month } }).sort({ date: 1 })
+  Employee.find({ dateWithOutYear: { $gt: today, $lte: month } }).sort({ dateWithOutYear: 1 })
     .then(data => {
       res.send(data);
     })
