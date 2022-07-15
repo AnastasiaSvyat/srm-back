@@ -18,14 +18,6 @@ const getPagination = (page, size) => {
 
 // Get all Staff
 staffRoute.route('/').get((req, res) => {
-  // Employee.find().sort({ lastName: 1 },(error, data) => {
-  //   if (error) {
-  //     return next(error)
-  //   } else {
-  //     res.json(data)
-  //   }
-  // })
-
   Employee.find().sort({ lastName: 1 })
     .then(data => {
       res.send(data);
@@ -40,12 +32,11 @@ staffRoute.route('/').get((req, res) => {
 // Add employee
 staffRoute.post('/add-employee', async (req, res) => {
   const candidate = await Employee.findOne({ email: req.body.email })
-  console.log(req.body.date);
-  if(req.body.date){
+  if (req.body.date) {
     var date = moment(req.body.date).format('YYYY-MM-DD');
     var dateWithOutYear = moment(req.body.date).format('MM-DD');
   }
-  
+
   try {
     if (candidate) {
       res.status(409).json({

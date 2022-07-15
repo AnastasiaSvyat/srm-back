@@ -18,13 +18,10 @@ amountConfirmedRequestMonthRoute.route('/amountConfirmedRequestMonth').post((req
         // }
     })
         .then(data => {
-            console.log(data);
             if (data) {
                 const a = data.request.some(element => {
                     if (element.name == req.body.request.name) {
-                        console.log(element.count);
                         element.count = element.count + req.body.request.count
-                        console.log(element.count);
                     }
                     return element.name == req.body.request.name
                 });
@@ -64,22 +61,19 @@ amountConfirmedRequestMonthRoute.route('/amountConfirmedRequestMonth').post((req
 
 amountConfirmedRequestMonthRoute.route('/getRequestCurrentUser').get((req, res) => {
 
-    // constdate = moment(req.query.date).format('MM-YYYY');
-    // console.log(req.query.date);
-
-    AmountConfirmedRequestMonth.findOne({ 
+    AmountConfirmedRequestMonth.findOne({
         idEmployee: req.query.idEmployee,
         date: req.query.date
-     })
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+            });
         });
-      });
 
-  })
+})
 
 
 
