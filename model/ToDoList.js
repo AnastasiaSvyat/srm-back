@@ -12,7 +12,7 @@ let ToDoList = new Schema({
     type: String
   },
   select:{
-    type:Boolean
+    type: Boolean
   },
 }, {
   collection: 'toDoList'
