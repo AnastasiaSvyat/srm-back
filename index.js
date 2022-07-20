@@ -35,6 +35,7 @@ const standartMonthHoursRoute = require('./route/standartMonthHours.routes')
 const logTimeRequestRoute = require('./route/LogTimeRequest.routes')
 const amountConfirmedRequestMonth = require('./route/amountConfirmedRequestMonth.routes')
 const houseRulesRoute = require('./route/houseRolus.routes')
+const positionListRoute = require('./route/positionList.routes')
 
 
 
@@ -66,6 +67,9 @@ app.use('/api', standartMonthHoursRoute)
 app.use('/api', logTimeRequestRoute)
 app.use('/api', amountConfirmedRequestMonth)
 app.use('/api', houseRulesRoute)
+app.use('/api', positionListRoute
+)
+
 
 
 
