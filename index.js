@@ -67,8 +67,7 @@ app.use('/api', standartMonthHoursRoute)
 app.use('/api', logTimeRequestRoute)
 app.use('/api', amountConfirmedRequestMonth)
 app.use('/api', houseRulesRoute)
-app.use('/api', positionListRoute
-)
+app.use('/api', positionListRoute)
 
 
 
