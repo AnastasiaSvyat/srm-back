@@ -34,7 +34,7 @@ staffRoute.post('/add-employee', async (req, res) => {
   const candidate = await Employee.findOne({ email: req.body.email })
   if (req.body.date) {
     var date = moment(req.body.date).format('YYYY-MM-DD');
-    var dateWithOutYear = moment(req.body.date).format('MM-DD');
+    var dateWithOutYear = moment(req.body.date).add(1, 'day').format('MM-DD');
   }
 
   try {
@@ -163,7 +163,7 @@ staffRoute.route('/getBirth-Select').get((req, res) => {
 staffRoute.put('/update-employee/:id', async (req, res, next) => {
   const candidate = await Employee.findOne({ email: req.body.email })
   const candidateId = await Employee.findOne({ email: req.body.email, _id: req.body.id })
-  req.body.dateWithOutYear = moment(req.body.date).format('MM-DD');
+  req.body.dateWithOutYear = moment(req.body.date).add(1, 'day').format('MM-DD');
   try {
     if (candidateId) {
       Employee.findByIdAndUpdate(req.params.id, {

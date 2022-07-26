@@ -8,7 +8,10 @@ var month = moment().format('YYYY-MM-31');
 
 // Add Event
 eventRoute.route('/add-event').post((req, res, next) => {
-  req.body.date = moment(req.body.date).format('YYYY-MM-DD');
+
+
+  req.body.date = moment(req.body.date).add(1, 'day').format('YYYY-MM-DD');
+      
   Events.create(req.body, (error, data) => {
     if (error) {
       return next(error)
@@ -57,6 +60,7 @@ eventRoute.route('/getEvent-Later').get((req, res, next) => {
 // todayEvents
 eventRoute.route('/getEvent-today').get((req, res) => {
   var today = moment().format('YYYY-MM-DD');
+  console.log(today)
   Events.find({ date: { $eq: today } })
     .then(data => {
       res.send(data);
@@ -95,6 +99,8 @@ eventRoute.route('/getEvent-month').get((req, res) => {
 
 // Update Event
 eventRoute.route('/update-event/:id').put((req, res, next) => {
+req.body.date = moment(req.body.date).add(1, 'day').format('YYYY-MM-DD');
+
   Events.findByIdAndUpdate(req.params.id, {
     $set: req.body
   }, (error, data) => {
