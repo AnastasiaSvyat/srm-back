@@ -57,8 +57,9 @@ staffRoute.post('/add-employee', async (req, res) => {
         info: req.body.info,
         infoUser: req.body.infoUser,
         skype: req.body.skype,
-        // file: req.body.file,
+        technologyStack: req.body.technologyStack,
         startDate: req.body.startDate,
+        englishLevel: req.body.englishLevel,
         dateWithOutYear: dateWithOutYear || req.body.date,
         id: req.body._id,
         password: bcrypt.hashSync(password, salt)

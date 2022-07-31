@@ -7,6 +7,7 @@ let express = require('express'),
 const fileUpload = require('express-fileupload');
 const mongoosePaginate = require('mongoose-paginate-v2');
 const createError = require('http-errors');
+const http = require('http');
 
 
 
@@ -36,7 +37,7 @@ const logTimeRequestRoute = require('./route/LogTimeRequest.routes')
 const amountConfirmedRequestMonth = require('./route/amountConfirmedRequestMonth.routes')
 const houseRulesRoute = require('./route/houseRolus.routes')
 const positionListRoute = require('./route/positionList.routes')
-
+const technologyStackRoute = require('./route/technologyStack.routes')
 
 
 
@@ -68,7 +69,7 @@ app.use('/api', logTimeRequestRoute)
 app.use('/api', amountConfirmedRequestMonth)
 app.use('/api', houseRulesRoute)
 app.use('/api', positionListRoute)
-
+app.use('/api', technologyStackRoute)
 
 
 

@@ -48,6 +48,12 @@ const Employee = new mongoose.Schema({
   info: {
     type: Array
   },
+  technologyStack: {
+    type: Array
+  },
+  englishLevel: {
+    type: String
+  },
   infoUser: {
     type:String
   },
